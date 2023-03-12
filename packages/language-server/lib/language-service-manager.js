@@ -10,7 +10,7 @@
 import path from 'node:path'
 import {fileURLToPath, pathToFileURL} from 'node:url'
 
-import {createMdxLanguageService} from '@mdx-js/language-service'
+import {createMdxLanguageService} from '@glass-lang/language-service'
 
 import {loadPlugins} from './configuration.js'
 import {
@@ -145,7 +145,7 @@ async function createLanguageService(ts, configPath) {
     return getDefaultLanguageService(ts)
   }
 
-  const plugins = await loadPlugins(path.dirname(configPath), config.mdx)
+  const plugins = await loadPlugins(path.dirname(configPath), config.glass)
 
   const {options, projectReferences} = ts.parseJsonConfigFileContent(
     config,
@@ -156,7 +156,7 @@ async function createLanguageService(ts, configPath) {
     undefined,
     [
       {
-        extension: '.mdx',
+        extension: '.glass',
         isMixedContent: true,
         scriptKind: ts.ScriptKind.JSX
       }

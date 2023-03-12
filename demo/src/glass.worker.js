@@ -1,4 +1,4 @@
-import {configure} from '@mdx-js/monaco/mdx.worker.js'
+import {configure} from '@glass-lang/monaco/glass.worker.js'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
 

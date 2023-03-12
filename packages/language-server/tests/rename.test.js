@@ -25,8 +25,8 @@ test('handle rename request of variable for opened references', async () => {
     capabilities: {}
   })
 
-  await openTextDocument(connection, 'node16/b.mdx')
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  await openTextDocument(connection, 'node16/b.glass')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(RenameRequest.type, {
     newName: 'renamed',
     position: {line: 4, character: 3},
@@ -35,7 +35,7 @@ test('handle rename request of variable for opened references', async () => {
 
   assert.deepEqual(result, {
     changes: {
-      [fixtureUri('node16/a.mdx')]: [
+      [fixtureUri('node16/a.glass')]: [
         {
           newText: 'renamed',
           range: {
@@ -64,7 +64,7 @@ test('handle rename request of variable for opened references', async () => {
           }
         }
       ],
-      [fixtureUri('node16/b.mdx')]: [
+      [fixtureUri('node16/b.glass')]: [
         {
           newText: 'renamed',
           range: {
@@ -84,7 +84,10 @@ test('handle undefined rename request', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/undefined-props.mdx')
+  const {uri} = await openTextDocument(
+    connection,
+    'node16/undefined-props.glass'
+  )
   const result = await connection.sendRequest(RenameRequest.type, {
     newName: 'renamed',
     position: {line: 4, character: 3},
@@ -94,14 +97,14 @@ test('handle undefined rename request', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-existent mdx files', async () => {
+test('ignore non-existent glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
     capabilities: {}
   })
 
-  const uri = fixtureUri('node16/non-existent.mdx')
+  const uri = fixtureUri('node16/non-existent.glass')
   const result = await connection.sendRequest(RenameRequest.type, {
     newName: 'renamed',
     position: {line: 7, character: 15},
@@ -111,7 +114,7 @@ test('ignore non-existent mdx files', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-mdx files', async () => {
+test('ignore non-glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,

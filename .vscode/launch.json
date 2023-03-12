@@ -13,7 +13,7 @@
         "--profile-temp",
         "--skip-release-notes",
         "--skip-welcome",
-        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode-mdx",
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/vscode-glass",
         "${workspaceFolder}/fixtures/fixtures.code-workspace"
       ],
       "skipFiles": ["<node_internals>/**", "**/node_modules/vscode-*/**"],

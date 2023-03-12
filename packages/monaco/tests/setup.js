@@ -1,9 +1,9 @@
-import {initializeMonacoMdx} from '@mdx-js/monaco'
+import {initializeMonacoMdx} from '@glass-lang/monaco'
 import {monaco} from 'playwright-monaco'
 
 monaco.languages.register({
-  id: 'mdx',
-  extensions: ['.mdx']
+  id: 'glass',
+  extensions: ['.glass']
 })
 
 initializeMonacoMdx(monaco)

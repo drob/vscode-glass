@@ -48,7 +48,7 @@ export function toDiagnostic(ts, error) {
     {
       category: ts.DiagnosticCategory.Error,
       // @ts-expect-error A number is expected, but it’s only used for display purposes.
-      code: 'MDX',
+      code: 'Glass',
       messageText,
       // @ts-expect-error We don’t use file.
       file: undefined,

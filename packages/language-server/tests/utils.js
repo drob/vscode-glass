@@ -22,7 +22,7 @@ import {
  * The language server is launched using the IPC protocol.
  */
 export function createConnection() {
-  const proc = spawn('mdx-language-server', ['--node-ipc'], {
+  const proc = spawn('glass-language-server', ['--node-ipc'], {
     cwd: new URL('..', import.meta.url),
     stdio: ['inherit', 'inherit', 'inherit', 'ipc']
   })
@@ -60,7 +60,7 @@ export async function openTextDocument(connection, fileName) {
   const text = await fs.readFile(url, 'utf8')
   /** @type {TextDocumentItem} */
   const textDocument = {
-    languageId: 'mdx',
+    languageId: 'glass',
     text,
     uri,
     version: 1

@@ -34,7 +34,7 @@ test('type errors', async () => {
   const diagnosticsPromise = waitForDiagnostics(connection)
   const textDocument = await openTextDocument(
     connection,
-    'node16/type-errors.mdx'
+    'node16/type-errors.glass'
   )
   const diagnostics = await diagnosticsPromise
 
@@ -56,7 +56,7 @@ test('type errors', async () => {
                 end: {line: 12, character: 2},
                 start: {line: 11, character: 4}
               },
-              uri: fixtureUri('node16/type-errors.mdx')
+              uri: fixtureUri('node16/type-errors.glass')
             },
             message: "'count' is declared here."
           }
@@ -79,7 +79,7 @@ test('type errors', async () => {
                 start: {line: 11, character: 4},
                 end: {line: 12, character: 2}
               },
-              uri: fixtureUri('node16/type-errors.mdx')
+              uri: fixtureUri('node16/type-errors.glass')
             },
             message: "'count' is declared here."
           }
@@ -101,7 +101,7 @@ test('does not resolve shadow content', async () => {
   const diagnosticsPromise = waitForDiagnostics(connection)
   const textDocument = await openTextDocument(
     connection,
-    'node16/link-reference.mdx'
+    'node16/link-reference.glass'
   )
   const diagnostics = await diagnosticsPromise
 

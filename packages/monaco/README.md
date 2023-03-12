@@ -1,15 +1,15 @@
-# `@mdx-js/monaco`
+# `@glass-lang/monaco`
 
 ## What is this?
 
-This package IntelliSense for [MDX][] in [Monaco editor][].
+This package IntelliSense for [Glass][] in [Monaco editor][].
 This package provides IntelliSense based on [TypeScript][], as well as some
 markdown specific features.
 
 ## When should I use this?
 
-You can use this package if you want to integrate IntelliSense for [MDX][] files
-in a browser.
+You can use this package if you want to integrate IntelliSense for [Glass][]
+files in a browser.
 
 ## Install
 
@@ -18,7 +18,7 @@ This package is not published yet.
 ## Use
 
 ```js
-import { initializeMonacoMdx } from '@mdx-js/monaco'
+import { initializeMonacoMdx } from '@glass-lang/monaco'
 import * as monaco from 'monaco-editor'
 
 // Register the worker
@@ -47,9 +47,9 @@ window.MonacoEnvironment = {
             import.meta.url,
           ),
         )
-      case 'mdx':
+      case 'glass':
         return new Worker(
-          new URL('@mdx-js/monaco/mdx.worker.js', import.meta.url),
+          new URL('@glass-lang/monaco/glass.worker.js', import.meta.url),
         )
       default:
         throw new Error(`Unsupported worker label: ${label}`)
@@ -57,7 +57,7 @@ window.MonacoEnvironment = {
   },
 }
 
-// Initialize the MDX IntelliSense
+// Initialize the Glass IntelliSense
 initializeMonacoMdx(monaco)
 
 // Create a model
@@ -74,7 +74,7 @@ const content = `
 const model = monaco.editor.createModel(
   content,
   undefined,
-  monaco.Uri.parse('file:///hello.mdx'),
+  monaco.Uri.parse('file:///hello.glass'),
 )
 
 // Create the editor
@@ -84,14 +84,14 @@ const editor = monaco.editor.create(element, { model })
 
 By default no plugins included.
 To support plugins, you have to create your own worker.
-Then, instead of referencing `@mdx-js/monaco/mdx.worker.js` in the
+Then, instead of referencing `@glass-lang/monaco/glass.worker.js` in the
 `MonacoEnvironment`, reference your own cusotmized worker.
 
 For example, to support [frontmatter][] and [GFM][], create a file named
-`mdx.worker.js` with the following content:
+`glass.worker.js` with the following content:
 
 ```js
-import {configure} from '@mdx-js/monaco/mdx.worker.js'
+import {configure} from '@glass-lang/monaco/glass.worker.js'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
 
@@ -103,7 +103,7 @@ configure({
 And make the following change in your `MonacoEnvironment`:
 
 ```diff
-  import { initializeMonacoMdx } from '@mdx-js/monaco'
+  import { initializeMonacoMdx } from '@glass-lang/monaco'
   import * as monaco from 'monaco-editor'
 
   // Register the worker
@@ -111,9 +111,9 @@ And make the following change in your `MonacoEnvironment`:
     getWorker(_workerId, label) {
       switch (label) {
         // …
-        case 'mdx':
--         return new Worker(new URL('@mdx-js/monaco/mdx.worker.js', import.meta.url))
-+         return new Worker(new URL('./mdx.worker.js', import.meta.url))
+        case 'glass:
+-         return new Worker(new URL('@glass-lang/monaco/glass.worker.js', import.meta.url))
++         return new Worker(new URL('./glass.worker.js', import.meta.url))
         // …
       }
     }
@@ -136,7 +136,7 @@ The language integration supports the following features:
 *   TypeScript hover hints
 *   TypeScript references
 
-[MDX][] doesn’t support TypeScript syntax, but it does support
+[Glass][] doesn’t support TypeScript syntax, but it does support
 [types in JSDoc][jsdoc].
 The special type `Props` is used to determine the type used for `props`.
 
@@ -153,18 +153,9 @@ This package is fully typed with [TypeScript][]
 
 ## Security
 
-This package provides IntelliSense for [MDX][] models.
+This package provides IntelliSense for [Glass][] models.
 Some IntelliSense features modify your model content, for example suggestions
 and automatic refactors.
-
-## Contribute
-
-See [§ Contribute][contribute] on our website for ways to get started.
-See [§ Support][support] for ways to get help.
-
-This project has a [code of conduct][].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
 
 ## See also
 
@@ -174,28 +165,20 @@ abide by its terms.
 
 ## License
 
-[MIT][] © [Remco Haszing][author]
+[MIT][] © [Foundation][glass]
 
-[author]: https://github.com/remcohaszing
-
-[code of conduct]: https://github.com/mdx-js/.github/blob/main/code-of-conduct.md
-
-[contribute]: https://mdxjs.com/community/contribute
-
-[demo]: https://github.com/mdx-js/mdx-analyzer/tree/HEAD/demo
+[demo]: https://github.com/foundation-ui/glass-vscode/tree/HEAD/demo
 
 [frontmatter]: https://github.com/remarkjs/remark-frontmatter
+
+[glass]: https://foundation-ui.com
 
 [gfm]: https://github.com/remarkjs/remark-gfm
 
 [jsdoc]: https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html
 
-[mdx]: https://mdxjs.com
-
 [mit]: LICENSE
 
 [monaco editor]: https://github.com/microsoft/monaco-editor
-
-[support]: https://mdxjs.com/community/support
 
 [typescript]: https://typescriptlang.org

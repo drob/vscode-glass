@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "@mdx-js/language-service": ["../language-service/index.js"]
+      "@glass-lang/language-service": ["../language-service/index.js"]
     }
   }
 }

@@ -25,7 +25,7 @@
  *   example `remark-frontmatter`, but not `remark-mdx-frontmatter`.
  */
 
-import {createMdxLanguageService} from '@mdx-js/language-service'
+import {createMdxLanguageService} from '@glass-lang/language-service'
 // @ts-expect-error This module is untyped.
 import {initialize as initializeWorker} from 'monaco-editor/esm/vs/editor/editor.worker.js'
 // @ts-expect-error This module is untyped.

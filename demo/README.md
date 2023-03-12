@@ -1,23 +1,23 @@
-# Demo of `@mdx-js/monaco`
+# Demo of `@glass-lang/monaco`
 
 ## What is this?
 
-This is a project to demo the `@mdx-js/monaco` package using [webpack][].
+This is a project to demo the `@glass-lang/monaco` package using [webpack][].
 When started, this starts a webserver that serves Monaco editor and a file tree.
 The contents of the `fixtures/demo` directory are loaded into [Monaco editor][].
 
 ## When should I use this?
 
-You can use this demo to troubleshoot issues related to `@mdx-js/monaco`, or to
-see how it can be integrated in your own project.
+You can use this demo to troubleshoot issues related to `@glass-lang/monaco`,
+or to see how it can be integrated in your own project.
 
 ## Use
 
 Clone and install this repository.
 
 ```sh
-git clone https://github.com/mdx-js/mdx-analyzer.git
-cd mdx-analyzer
+git clone https://github.com/foundation-ui/glass-vscode.git
+cd glass-vscode
 npm install
 ```
 
@@ -41,9 +41,9 @@ It’s safe to run and open.
 
 ## License
 
-[MIT][] © [Remco Haszing][author]
+[MIT][] © [Foundation][]
 
-[author]: https://github.com/remcohaszing
+[foundation]: https://foundation-ui.com
 
 [mit]: LICENSE
 

@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install
-      - run: npx --workspace vscode-mdx vsce package --out "$PWD"
+      - run: npx --workspace vscode-glass vsce package --out "$PWD"
       - run: npx ovsx publish --packagePath *.vsix
         env:
           OVSX_PAT: ${{secrets.OPEN_VSX_TOKEN}}
@@ -27,6 +27,6 @@ jobs:
           VSCE_PAT: ${{secrets.VSCE_TOKEN}}
       - uses: softprops/action-gh-release@v1
         with:
-          body_path: ${{github.workspace}}/packages/vscode-mdx/CHANGELOG.md
+          body_path: ${{github.workspace}}/packages/vscode-glass/CHANGELOG.md
           files: |
             *.vsix

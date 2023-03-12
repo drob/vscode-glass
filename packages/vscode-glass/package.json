@@ -1,37 +1,32 @@
 {
-  "name": "vscode-mdx",
-  "version": "1.2.5",
-  "displayName": "MDX",
-  "description": "Language support for MDX",
+  "name": "vscode-glass",
+  "version": "0.0.1",
+  "displayName": "Glass",
+  "description": "Language support for Glass",
   "categories": [
     "Programming Languages"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdx-js/mdx-analyzer.git",
-    "directory": "packages/vscode-mdx"
+    "url": "https://github.com/foundation-ui/glass-vscode.git",
+    "directory": "packages/vscode-glass"
   },
-  "qna": "https://github.com/orgs/mdx-js/discussions",
-  "author": "JounQin",
-  "publisher": "unifiedjs",
-  "sponsor": {
-    "url": "https://opencollective.com/unified"
-  },
-  "license": "MIT",
   "private": true,
   "engines": {
     "vscode": ">=1.0.0"
   },
   "main": "out/extension.js",
   "keywords": [
-    "mdx",
-    "markdown"
+    "glass",
+    "foundation",
+    "gpt",
+    "llm"
   ],
-  "icon": "assets/mdx.png",
+  "icon": "assets/glass.png",
   "activationEvents": [
     "onLanguage:javascript",
     "onLanguage:javascriptreact",
-    "onLanguage:mdx",
+    "onLanguage:glass",
     "onLanguage:typescript",
     "onLanguage:typescriptreact"
   ],
@@ -39,7 +34,7 @@
     "dependencies": false
   },
   "scripts": {
-    "build": "esbuild extension=./src/extension.js language-server=@mdx-js/language-server --bundle --platform=node --target=node16 --external:vscode --outdir=out",
+    "build": "esbuild extension=./src/extension.js language-server=@glass-lang/language-server --bundle --platform=node --target=node16 --external:vscode --outdir=out",
     "build:debug": "npm run copy-libs && npm run build -- --sourcemap",
     "copy-libs": "cpy '../../node_modules/typescript/lib/lib.*.d.ts' out/",
     "vscode:prepublish": "npm run copy-libs && npm run build -- --minify"
@@ -49,30 +44,39 @@
     "@vscode/vsce": "^2.0.0",
     "cpy-cli": "^4.0.0",
     "esbuild": "^0.16.0",
+    "mdast-util-from-markdown": "^1.3.0",
+    "mdast-util-mdx": "^2.0.1",
+    "micromark-extension-mdxjs": "^1.0.0",
     "ovsx": "^0.8.0",
     "vscode-languageclient": "^8.0.0"
   },
   "contributes": {
     "configuration": [
       {
-        "title": "MDX",
+        "title": "Glass",
         "properties": {
-          "mdx.experimentalLanguageServer": {
+          "glass.experimentalLanguageServer": {
             "type": "boolean",
             "default": false,
-            "description": "Enable experimental IntelliSense support for MDX files."
+            "description": "Enable experimental IntelliSense support for Glass files."
           }
         }
       }
     ],
+    "commands": [
+      {
+        "command": "glass.transpileAll",
+        "title": "Glass: Transpile all"
+      }
+    ],
     "languages": [
       {
-        "id": "mdx",
+        "id": "glass",
         "aliases": [
-          "MDX"
+          "Glass"
         ],
         "extensions": [
-          ".mdx"
+          ".glass"
         ],
         "configuration": "./language-configuration.json"
       }
@@ -85,9 +89,9 @@
     ],
     "grammars": [
       {
-        "language": "mdx",
+        "language": "glass",
         "scopeName": "text.html.markdown.jsx",
-        "path": "./syntaxes/mdx.tmLanguage.json",
+        "path": "./syntaxes/glass.tmLanguage.json",
         "embeddedLanguages": {
           "source.js": "javascript",
           "source.js.jsx": "javascriptreact",
@@ -138,5 +142,8 @@
         }
       }
     ]
+  },
+  "dependencies": {
+    "prettier": "^2.8.4"
   }
 }

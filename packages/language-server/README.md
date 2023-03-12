@@ -1,15 +1,15 @@
-# `@mdx-js/language-service`
+# `@glass-lang/language-service`
 
 ## What is this?
 
-This package provides a [language server][lsp] for [MDX][].
+This package provides a [language server][lsp] for [Glass][].
 The language server provides IntelliSense based on [TypeScript][], as well as
 some markdown specific features.
 
 ## When should I use this?
 
 You can use this package if you want to enhance your editor with IntelliSense
-for [MDX][] files.
+for [Glass][] files.
 Some editors can consume this package directly, others need a plugin in order to
 consume this package.
 
@@ -21,7 +21,7 @@ This package is not published yet.
 
 How to use this package depends on your editor integration.
 
-This package provides the CLI `mdx-language-server`.
+This package provides the CLI `glass-language-server`.
 Because this is based on [`vscode-languageserver`][vscode-languageserver], the
 same transports are supported.
 
@@ -37,14 +37,14 @@ This language server supports the following features:
 *   TypeScript hover hints
 *   TypeScript references
 
-[MDX][] doesn’t support TypeScript syntax, but it does support
+[Glass][] doesn’t support TypeScript syntax, but it does support
 [types in JSDoc][jsdoc].
 The special type `Props` is used to determine the type used for `props`.
 For example:
 
 <!-- prettier-ignore -->
 
-```mdx
+```glass
 {/**
   * @typedef Props
   * @property {string} name
@@ -68,7 +68,7 @@ For example, to support [frontmatter][] with YAML and TOML and [GFM][]:
   "compilerOptions": {
     // …
   },
-  "mdx": {
+  "glass": {
     "plugins": [
       [
         "remark-frontmatter",
@@ -95,29 +95,16 @@ It should work anywhere where LSP 3.6.0 or later is implemented.
 
 ## Security
 
-This package provides IntelliSense for [MDX][] files.
+This package provides IntelliSense for [Glass][] files.
 Some IntelliSense features modify your source code, for example suggestions and
 automatic refactors.
 It is recommended to keep your source code under version control.
 
-## Contribute
-
-See [§ Contribute][contribute] on our website for ways to get started.
-See [§ Support][support] for ways to get help.
-
-This project has a [code of conduct][].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
-
 ## License
 
-[MIT][] © [Remco Haszing][author]
+[MIT][] © [Foundation][glass]
 
-[author]: https://github.com/remcohaszing
-
-[code of conduct]: https://github.com/mdx-js/.github/blob/main/code-of-conduct.md
-
-[contribute]: https://mdxjs.com/community/contribute/
+[glass]: https://foundation-ui.com
 
 [frontmatter]: https://github.com/remarkjs/remark-frontmatter
 
@@ -127,13 +114,9 @@ abide by its terms.
 
 [lsp]: https://microsoft.github.io/language-server-protocol
 
-[mdx]: https://mdxjs.com
-
 [mit]: LICENSE
 
 [remark plugins]: https://github.com/remarkjs/remark/blob/main/doc/plugins.md
-
-[support]: https://mdxjs.com/community/support/
 
 [typescript]: https://typescriptlang.org
 

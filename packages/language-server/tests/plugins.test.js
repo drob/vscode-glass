@@ -33,7 +33,7 @@ test('frontmatter', async () => {
   const diagnosticsPromise = waitForDiagnostics(connection)
   const textDocument = await openTextDocument(
     connection,
-    'frontmatter/frontmatter.mdx'
+    'frontmatter/frontmatter.glass'
   )
   const diagnostics = await diagnosticsPromise
 

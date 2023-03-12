@@ -26,7 +26,7 @@ test('resolve hover in ESM', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 4, character: 3},
     textDocument: {uri}
@@ -51,8 +51,8 @@ test('resolve import hover in ESM if the other file was previously opened', asyn
     capabilities: {}
   })
 
-  await openTextDocument(connection, 'node16/a.mdx')
-  const {uri} = await openTextDocument(connection, 'node16/b.mdx')
+  await openTextDocument(connection, 'node16/a.glass')
+  const {uri} = await openTextDocument(connection, 'node16/b.glass')
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 0, character: 10},
     textDocument: {uri}
@@ -78,7 +78,7 @@ test('resolve import hover in ESM if the other file is unopened', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/b.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/b.glass')
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 0, character: 10},
     textDocument: {uri}
@@ -104,7 +104,7 @@ test('resolve import hover in JSX expressions', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 11, character: 1},
     textDocument: {uri}
@@ -122,7 +122,7 @@ test('resolve import hover in JSX expressions', async () => {
   })
 })
 
-test('support mdxJsxTextElement', async () => {
+test('support glassJsxTextElement', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
@@ -131,7 +131,7 @@ test('support mdxJsxTextElement', async () => {
 
   const {uri} = await openTextDocument(
     connection,
-    'node16/mdx-jsx-text-element.mdx'
+    'node16/glass-jsx-text-element.glass'
   )
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 3, character: 5},
@@ -158,7 +158,7 @@ test('resolve import hover in JSX elements', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 13, character: 5},
     textDocument: {uri}
@@ -176,14 +176,14 @@ test('resolve import hover in JSX elements', async () => {
   })
 })
 
-test('ignore non-existent mdx files', async () => {
+test('ignore non-existent glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
     capabilities: {}
   })
 
-  const uri = fixtureUri('node16/non-existent.mdx')
+  const uri = fixtureUri('node16/non-existent.glass')
   const result = await connection.sendRequest(HoverRequest.type, {
     position: {line: 7, character: 15},
     textDocument: {uri}
@@ -192,7 +192,7 @@ test('ignore non-existent mdx files', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-mdx files', async () => {
+test('ignore non-glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,

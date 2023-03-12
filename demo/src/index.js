@@ -1,6 +1,6 @@
 import './index.css'
 
-import {initializeMonacoMdx} from '@mdx-js/monaco'
+import {initializeMonacoMdx} from '@glass-lang/monaco'
 import * as monaco from 'monaco-editor'
 
 // Configure Monaco editor to load workers.
@@ -35,8 +35,8 @@ window.MonacoEnvironment = {
         )
       }
 
-      case 'mdx': {
-        return new Worker(new URL('mdx.worker.js', import.meta.url))
+      case 'glass': {
+        return new Worker(new URL('glass.worker.js', import.meta.url))
       }
 
       default: {
@@ -56,8 +56,8 @@ monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
 // This will be redundant once
 // https://github.com/microsoft/monaco-editor/pull/3096 is released.
 monaco.languages.register({
-  id: 'mdx',
-  extensions: ['.mdx']
+  id: 'glass',
+  extensions: ['.glass']
 })
 
 // This is where we actually configure the MDX integration.
@@ -118,7 +118,7 @@ if (import.meta.webpackContext) {
 // Load the demo fixtures.
 if (import.meta.webpackContext) {
   const demoContext = import.meta.webpackContext('../../fixtures/demo', {
-    regExp: /\.([jt]sx?|mdx)$/
+    regExp: /\.([jt]sx?|glass)$/
   })
   for (const key of demoContext.keys().sort()) {
     createFile(key, demoContext(key))
@@ -143,7 +143,7 @@ function getModel() {
       return model
     }
 
-    if (model.uri.path.endsWith('.mdx')) {
+    if (model.uri.path.endsWith('.glass')) {
       mdxModel = model
     }
   }

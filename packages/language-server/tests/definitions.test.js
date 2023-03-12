@@ -26,7 +26,7 @@ test('resolve file-local definitions in ESM', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(DefinitionRequest.type, {
     position: {line: 4, character: 3},
     textDocument: {uri}
@@ -42,7 +42,7 @@ test('resolve file-local definitions in ESM', async () => {
         start: {line: 1, character: 16},
         end: {line: 1, character: 17}
       },
-      targetUri: fixtureUri('node16/a.mdx')
+      targetUri: fixtureUri('node16/a.glass')
     }
   ])
 })
@@ -54,8 +54,8 @@ test('resolve cross-file definitions in ESM if the other file was previously ope
     capabilities: {}
   })
 
-  await openTextDocument(connection, 'node16/a.mdx')
-  const {uri} = await openTextDocument(connection, 'node16/b.mdx')
+  await openTextDocument(connection, 'node16/a.glass')
+  const {uri} = await openTextDocument(connection, 'node16/b.glass')
   const result = await connection.sendRequest(DefinitionRequest.type, {
     position: {line: 0, character: 10},
     textDocument: {uri}
@@ -71,7 +71,7 @@ test('resolve cross-file definitions in ESM if the other file was previously ope
         start: {line: 1, character: 16},
         end: {line: 1, character: 17}
       },
-      targetUri: fixtureUri('node16/a.mdx')
+      targetUri: fixtureUri('node16/a.glass')
     }
   ])
 })
@@ -83,7 +83,7 @@ test('resolve cross-file definitions in ESM if the other file is unopened', asyn
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/b.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/b.glass')
   const result = await connection.sendRequest(DefinitionRequest.type, {
     position: {line: 0, character: 10},
     textDocument: {uri}
@@ -99,7 +99,7 @@ test('resolve cross-file definitions in ESM if the other file is unopened', asyn
         start: {line: 1, character: 16},
         end: {line: 1, character: 17}
       },
-      targetUri: fixtureUri('node16/a.mdx')
+      targetUri: fixtureUri('node16/a.glass')
     }
   ])
 })
@@ -111,7 +111,10 @@ test('resolve markdown link references', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/link-reference.mdx')
+  const {uri} = await openTextDocument(
+    connection,
+    'node16/link-reference.glass'
+  )
   const result = await connection.sendRequest(DefinitionRequest.type, {
     position: {line: 0, character: 10},
     textDocument: {uri}
@@ -127,7 +130,7 @@ test('resolve markdown link references', async () => {
         start: {line: 2, character: 0},
         end: {line: 2, character: 24}
       },
-      targetUri: fixtureUri('node16/link-reference.mdx')
+      targetUri: fixtureUri('node16/link-reference.glass')
     }
   ])
 })
@@ -139,7 +142,10 @@ test('does not resolve shadow content', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/undefined-props.mdx')
+  const {uri} = await openTextDocument(
+    connection,
+    'node16/undefined-props.glass'
+  )
   const result = await connection.sendRequest(DefinitionRequest.type, {
     position: {line: 0, character: 37},
     textDocument: {uri}
@@ -148,14 +154,14 @@ test('does not resolve shadow content', async () => {
   assert.deepEqual(result, [])
 })
 
-test('ignore non-existent mdx files', async () => {
+test('ignore non-existent glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
     capabilities: {}
   })
 
-  const uri = fixtureUri('node16/non-existent.mdx')
+  const uri = fixtureUri('node16/non-existent.glass')
   const result = await connection.sendRequest(DefinitionRequest.type, {
     position: {line: 7, character: 15},
     textDocument: {uri}
@@ -164,7 +170,7 @@ test('ignore non-existent mdx files', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-mdx files', async () => {
+test('ignore non-glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,

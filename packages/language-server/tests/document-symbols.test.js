@@ -30,7 +30,7 @@ test('resolve document symbols', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/mixed.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/mixed.glass')
   const result = await connection.sendRequest(DocumentSymbolRequest.type, {
     textDocument: {uri}
   })
@@ -52,14 +52,14 @@ test('resolve document symbols', async () => {
   ])
 })
 
-test('ignore non-existent mdx files', async () => {
+test('ignore non-existent glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
     capabilities: {}
   })
 
-  const uri = fixtureUri('node16/non-existent.mdx')
+  const uri = fixtureUri('node16/non-existent.glass')
   const result = await connection.sendRequest(DocumentSymbolRequest.type, {
     textDocument: {uri}
   })
@@ -67,7 +67,7 @@ test('ignore non-existent mdx files', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-mdx files', async () => {
+test('ignore non-glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,

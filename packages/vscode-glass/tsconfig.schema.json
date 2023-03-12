@@ -1,7 +1,7 @@
 {
   "properties": {
-    "mdx": {
-      "title": "MDX language server options",
+    "glass": {
+      "title": "Glass language server options",
       "$ref": "https://json.schemastore.org/remarkrc.json"
     }
   }

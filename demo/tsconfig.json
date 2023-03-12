@@ -7,9 +7,11 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "@mdx-js/language-service": ["../packages/language-service/index.js"],
-      "@mdx-js/monaco/mdx.worker.js": ["../packages/monaco/mdx.worker.js"],
-      "@mdx-js/monaco": ["../packages/monaco/index.js"]
+      "@glass-lang/language-service": ["../packages/language-service/index.js"],
+      "@glass-lang/monaco/glass.worker.js": [
+        "../packages/monaco/glass.worker.js"
+      ],
+      "@glass-lang/monaco": ["../packages/monaco/index.js"]
     }
   }
 }

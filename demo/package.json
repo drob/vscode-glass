@@ -1,5 +1,5 @@
 {
-  "name": "@mdx-js/monaco-demo",
+  "name": "@glass-lang/monaco-demo",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -8,7 +8,7 @@
     "start": "webpack serve --mode development"
   },
   "dependencies": {
-    "@mdx-js/monaco": "*",
+    "@glass-lang/monaco": "*",
     "@types/webpack-env": "^1.0.0",
     "css-loader": "^6.0.0",
     "html-webpack-plugin": "^5.0.0",

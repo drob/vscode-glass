@@ -1,17 +1,15 @@
 {
-  "name": "@mdx-js/language-service",
+  "name": "@glass-lang/language-service",
   "version": "0.0.0",
   "type": "module",
-  "description": "MDX IntelliSense in Monaco editor",
+  "description": "Glass IntelliSense in Monaco editor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdx-js/mdx-analyzer.git",
+    "url": "https://github.com/foundation-ui/glass-vscode.git",
     "directory": "packages/language-service"
   },
-  "homepage": "https://mdxjs.com",
-  "bugs": "https://github.com/mdx-js/mdx-analyzer/issues",
-  "author": "Remco Haszing <remcohaszing@gmail.com>",
-  "funding": "https://opencollective.com/unified",
+  "homepage": "https://foundation-ui.com",
+  "bugs": "https://github.com/foundation-ui/glass-vscode/issues",
   "license": "MIT",
   "exports": "./index.js",
   "files": [
@@ -25,7 +23,10 @@
     "monaco",
     "monaco-editor",
     "typescript",
-    "unified"
+    "unified",
+    "glass",
+    "llm",
+    "gpt"
   ],
   "scripts": {
     "build": "tsc",

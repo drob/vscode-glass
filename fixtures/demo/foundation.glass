@@ -1,0 +1,31 @@
+---
+arg1: string Description of the argument
+arg2: number Description of another arugment
+returns: code Description of what the function returns
+temperature: 5
+---
+
+Ok so no weird newline stuff. Great!
+
+{' '.repeat(4)}This is a prompt feels pretty good, can't get much better.
+
+Escaping less annoying, ` is much easier to do.
+
+{/* this is a comment */}
+
+Then there's the matter of writing code, intellisense, etc.
+
+```js
+async function foo() {
+  await Promise.resolve(5)
+  const res = await fetch('https://google.com')
+  return await res.text()
+}
+```
+
+We can also import!
+
+import coffee from 'https://foundation-ui.com/foundation/coffee@1.0.0'
+import {myFunction} from './code'
+
+{coffee({ arg1: "foo", arg2: "testing" })}

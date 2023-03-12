@@ -7,11 +7,11 @@
 import process from 'node:process'
 import {fileURLToPath} from 'node:url'
 
-import {isMdx} from '@mdx-js/language-service'
+import {isMdx} from '@glass-lang/language-service'
 import ts from 'typescript'
 import {
-  createConnection,
   CompletionItemTag,
+  createConnection,
   MarkupKind,
   ProposedFeatures,
   TextDocumentSyncKind,
@@ -30,7 +30,7 @@ import {
 import {documents, getDocByFileName, getMdxDoc} from './lib/documents.js'
 import {getOrCreateLanguageService} from './lib/language-service-manager.js'
 
-process.title = 'mdx-language-server'
+process.title = 'glass-language-server'
 
 const connection = createConnection(ProposedFeatures.all)
 
@@ -44,7 +44,7 @@ connection.onInitialize(() => {
         resolveProvider: true
       },
       definitionProvider: true,
-      documentSymbolProvider: {label: 'MDX'},
+      documentSymbolProvider: {label: 'Glass'},
       foldingRangeProvider: true,
       hoverProvider: true,
       referencesProvider: true,

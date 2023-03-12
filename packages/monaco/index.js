@@ -5,7 +5,7 @@
  * @typedef {import('monaco-editor').editor.ITextModel} ITextModel
  * @typedef {import('monaco-editor').editor.MonacoWebWorker<TypeScriptWorker>} MonacoWebWorker
  * @typedef {import('monaco-editor').languages.typescript.TypeScriptWorker} TypeScriptWorker
- * @typedef {Partial<import('./mdx.worker.js').CreateData>} CreateData
+ * @typedef {Partial<import('./glass.worker.js').CreateData>} CreateData
  *
  * @typedef InitializeMonacoMdxOptions
  * @property {CreateData} createData
@@ -35,8 +35,8 @@ import {
 export function initializeMonacoMdx(monaco, options) {
   const worker = /** @type {MonacoWebWorker} */ (
     monaco.editor.createWebWorker({
-      moduleId: '@mdx-js/monaco',
-      label: 'mdx',
+      moduleId: '@glass-lang/monaco',
+      label: 'glass',
       keepIdleModels: true,
       createData: /** @type {CreateData} */ ({
         compilerOptions: options?.createData?.compilerOptions || {},
@@ -59,7 +59,7 @@ export function initializeMonacoMdx(monaco, options) {
   const synchronize = (model) => {
     const languageId = model.getLanguageId()
     if (
-      languageId === 'mdx' ||
+      languageId === 'glass' ||
       languageId === 'javascript' ||
       languageId === 'javascriptreact' ||
       languageId === 'typescript' ||
@@ -77,24 +77,24 @@ export function initializeMonacoMdx(monaco, options) {
     worker,
     monaco.editor.onDidCreateModel(synchronize),
     monaco.languages.registerCompletionItemProvider(
-      'mdx',
+      'glass',
       createCompletionItemProvider(monaco, getProxy)
     ),
     monaco.languages.registerDefinitionProvider(
-      'mdx',
+      'glass',
       createDefinitionProvider(monaco, getProxy)
     ),
     monaco.languages.registerHoverProvider(
-      'mdx',
+      'glass',
       createHoverProvider(monaco, getProxy)
     ),
     monaco.languages.registerReferenceProvider(
-      'mdx',
+      'glass',
       createReferenceProvider(monaco, getProxy)
     ),
     registerMarkerDataProvider(
       monaco,
-      'mdx',
+      'glass',
       createMarkerDataProvider(monaco, getProxy)
     )
   ]

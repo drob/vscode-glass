@@ -1,4 +1,4 @@
-import { a } from './a.mdx'
+import { a } from './a.glass'
 
 {/*
   * Block comments are foldable.

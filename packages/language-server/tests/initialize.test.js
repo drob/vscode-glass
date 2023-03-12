@@ -35,7 +35,7 @@ test('initialize', async () => {
         resolveProvider: true
       },
       definitionProvider: true,
-      documentSymbolProvider: {label: 'MDX'},
+      documentSymbolProvider: {label: 'Glass'},
       foldingRangeProvider: true,
       hoverProvider: true,
       referencesProvider: true,

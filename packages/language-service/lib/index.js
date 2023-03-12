@@ -27,11 +27,11 @@ import {mdxToJsx, unistPositionToTextSpan} from './utils.js'
  *
  * @param {string} fileName
  *   The file name to check.
- * @returns {fileName is `${string}.mdx`}
+ * @returns {fileName is `${string}.glass`}
  *   Whether or not the filename contains MDX.
  */
 export function isMdx(fileName) {
-  return fileName.endsWith('.mdx')
+  return fileName.endsWith('.glass')
 }
 
 /**
@@ -44,7 +44,7 @@ export function isMdx(fileName) {
  */
 function assertNotMdx(fileName, fn) {
   if (isMdx(fileName)) {
-    throw new Error(`${fn} is not supported for MDX files`)
+    throw new Error(`${fn} is not supported for Glass files`)
   }
 }
 
@@ -142,7 +142,7 @@ export function createMdxLanguageService(ts, host, plugins) {
     ...host.getCompilationSettings(),
     // Always allow JS for type checking.
     allowJs: true,
-    // This internal TypeScript property lets TypeScript load `.mdx` files.
+    // This internal TypeScript property lets TypeScript load `.glass` files.
     allowNonTsExtensions: true
   })
 
@@ -788,7 +788,7 @@ export function createMdxLanguageService(ts, host, plugins) {
         return {
           canRename: false,
           localizedErrorMessage:
-            'Could not map the rename info to the MDX source'
+            'Could not map the rename info to the Glass source'
         }
       }
 

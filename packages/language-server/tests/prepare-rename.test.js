@@ -26,7 +26,7 @@ test('handle prepare rename request of variable', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(PrepareRenameRequest.type, {
     position: {line: 4, character: 3},
     textDocument: {uri}
@@ -45,7 +45,7 @@ test('handle unknown rename request', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/a.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/a.glass')
   const result = await connection.sendRequest(PrepareRenameRequest.type, {
     position: {line: 0, character: 1},
     textDocument: {uri}
@@ -61,7 +61,10 @@ test('handle undefined prepare rename request', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/undefined-props.mdx')
+  const {uri} = await openTextDocument(
+    connection,
+    'node16/undefined-props.glass'
+  )
   const result = await connection.sendRequest(PrepareRenameRequest.type, {
     position: {line: 0, character: 35},
     textDocument: {uri}
@@ -70,14 +73,14 @@ test('handle undefined prepare rename request', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-existent mdx files', async () => {
+test('ignore non-existent glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
     capabilities: {}
   })
 
-  const uri = fixtureUri('node16/non-existent.mdx')
+  const uri = fixtureUri('node16/non-existent.glass')
   const result = await connection.sendRequest(PrepareRenameRequest.type, {
     position: {line: 7, character: 15},
     textDocument: {uri}
@@ -86,7 +89,7 @@ test('ignore non-existent mdx files', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-mdx files', async () => {
+test('ignore non-glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,

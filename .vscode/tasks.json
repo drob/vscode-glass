@@ -4,7 +4,7 @@
     {
       "type": "shell",
       "command": "npm",
-      "args": ["--workspace", "vscode-mdx", "run", "build:debug"],
+      "args": ["--workspace", "vscode-glass", "run", "build:debug"],
       "label": "build",
       "presentation": {
         "clear": true,

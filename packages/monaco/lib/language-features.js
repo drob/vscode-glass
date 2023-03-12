@@ -212,7 +212,7 @@ export function createDefinitionProvider(monaco, getWorker) {
  */
 export function createMarkerDataProvider(monaco, getWorker) {
   return {
-    owner: 'mdx',
+    owner: 'glass',
 
     async provideMarkerData(model) {
       const worker = await getWorker(model.uri)

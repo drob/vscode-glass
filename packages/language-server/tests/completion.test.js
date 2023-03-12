@@ -26,7 +26,7 @@ test('support completion in ESM', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/completion.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/completion.glass')
   const result = await connection.sendRequest(CompletionRequest.type, {
     position: {line: 1, character: 1},
     textDocument: {uri}
@@ -38,7 +38,7 @@ test('support completion in ESM', async () => {
   assert.deepEqual(completion, {
     data: {
       offset: 30,
-      uri: fixtureUri('node16/completion.mdx')
+      uri: fixtureUri('node16/completion.glass')
     },
     insertText: 'Boolean',
     kind: 6,
@@ -55,7 +55,7 @@ test('support completion in JSX', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/completion.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/completion.glass')
   const result = await connection.sendRequest(CompletionRequest.type, {
     position: {line: 5, character: 3},
     textDocument: {uri}
@@ -67,7 +67,7 @@ test('support completion in JSX', async () => {
   assert.deepEqual(completion, {
     data: {
       offset: 77,
-      uri: fixtureUri('node16/completion.mdx')
+      uri: fixtureUri('node16/completion.glass')
     },
     insertText: 'Boolean',
     kind: 6,
@@ -84,7 +84,7 @@ test('ignore completion in markdown content', async () => {
     capabilities: {}
   })
 
-  const {uri} = await openTextDocument(connection, 'node16/completion.mdx')
+  const {uri} = await openTextDocument(connection, 'node16/completion.glass')
   const result = await connection.sendRequest(CompletionRequest.type, {
     position: {line: 8, character: 10},
     textDocument: {uri}

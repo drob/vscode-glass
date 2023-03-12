@@ -33,7 +33,7 @@ test('no tsconfig exists', async () => {
   const diagnosticsPromise = waitForDiagnostics(connection)
   const textDocument = await openTextDocument(
     connection,
-    'no-tsconfig/readme.mdx'
+    'no-tsconfig/readme.glass'
   )
   const diagnostics = await diagnosticsPromise
 

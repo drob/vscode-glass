@@ -1,33 +1,27 @@
-# `@mdx-js/language-service`
+# `@glass-lang/language-service`
 
 ## What is this?
 
-This package implements the logic needed to provide [MDX][] IntelliSense.
+This package implements the logic needed to provide [Glass][] IntelliSense.
 This is done by wrapping the [TypeScript][] language service.
 
 ## When should I use this?
 
-This package is intended for use by `@mdx-js/monaco` and `@mdx-js/language-server`.
+This package is intended for use by `@glass-lang/monaco` and `@glass-lang/language-server`.
 It’s not intended for external usage.
 
 ## Install
 
 This package is not published yet.
 
-## Use
-
-This package is intended for internal use only.
-If you do want to use this package for something else, please to let us know
-your use case in a [discussion][].
-
 ## API
 
-This package exports the identifier `createMdxLanguageService`.
+This package exports the identifier `createGlassLanguageService`.
 There is no default export.
 
-### `createMdxLanguageService(ts, host[, plugins])`
+### `createGlassLanguageService(ts, host[, plugins])`
 
-Create a [TypeScript][] language service that can handle [MDX][].
+Create a [TypeScript][] language service that can handle [Glass][].
 
 #### Parameters
 
@@ -39,7 +33,7 @@ Create a [TypeScript][] language service that can handle [MDX][].
 
 #### Returns
 
-A [TypeScript][] language service that can handle [MDX][].
+A [TypeScript][] language service that can handle [Glass][].
 
 ## Types
 
@@ -48,36 +42,17 @@ external use.
 
 ## Security
 
-This package provides IntelliSense for [MDX][] files.
+This package provides IntelliSense for [Glass][] files.
 Some IntelliSense features modify your source code, for example suggestions and
 automatic refactors.
 It is recommended to keep your source code under version control.
 
-## Contribute
-
-See [§ Contribute][contribute] on our website for ways to get started.
-See [§ Support][support] for ways to get help.
-
-This project has a [code of conduct][].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
-
 ## License
 
-[MIT][] © [Remco Haszing][author]
+[MIT][] © [Foundation][glass]
 
-[author]: https://github.com/remcohaszing
-
-[code of conduct]: https://github.com/mdx-js/.github/blob/main/code-of-conduct.md
-
-[contribute]: https://mdxjs.com/community/contribute/
-
-[discussion]: https://github.com/orgs/mdx-js/discussions
-
-[mdx]: https://mdxjs.com
+[glass]: https://foundation-ui.com
 
 [mit]: LICENSE
-
-[support]: https://mdxjs.com/community/support/
 
 [typescript]: https://typescriptlang.org
