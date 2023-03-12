@@ -11,6 +11,7 @@
     "url": "https://github.com/foundation-ui/glass-vscode.git",
     "directory": "packages/vscode-glass"
   },
+  "publisher": "foundation",
   "private": true,
   "engines": {
     "vscode": ">=1.0.0"
