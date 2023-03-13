@@ -1,7 +1,8 @@
 {
   "settings": {
     "git.openRepositoryInParentFolders": "never",
-    "glass.experimentalLanguageServer": true
+    "glass.language": "typescript",
+    "glass.generateTests": true
   },
   "folders": [
     {"path": "demo"},

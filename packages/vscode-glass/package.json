@@ -56,10 +56,20 @@
       {
         "title": "Glass",
         "properties": {
-          "glass.experimentalLanguageServer": {
+          "glass.language": {
+            "type": "string",
+            "default": "typescript",
+            "enum": [
+              "typescript",
+              "javascript",
+              "python"
+            ],
+            "description": "Language to transpile .glass files to"
+          },
+          "glass.generateTests": {
             "type": "boolean",
             "default": false,
-            "description": "Enable experimental IntelliSense support for Glass files."
+            "description": "Whether to generate test files during transpilation"
           }
         }
       }

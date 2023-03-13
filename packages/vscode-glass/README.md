@@ -14,8 +14,8 @@ You can install this extension from the [Marketplace](https://marketplace.visual
 
 This extension provides the following settings:
 
-*   `glass.experimentalLanguageServer`: Enable experimental IntelliSense support
-    for Glass files.  (`boolean`, default: false)
+*   `glass.language`: Which language to transpile to.
+    (`string`, default: `"typescript"`)
 
 ## Plugins
 

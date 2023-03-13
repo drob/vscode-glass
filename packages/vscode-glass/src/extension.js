@@ -3,11 +3,11 @@
  * @typedef {import('vscode').ExtensionContext} ExtensionContext
  */
 
-import * as fs from 'node:fs'
-import * as path from 'node:path'
 import {fromMarkdown} from 'mdast-util-from-markdown'
 import {mdxFromMarkdown} from 'mdast-util-mdx'
 import {mdxjs} from 'micromark-extension-mdxjs'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 import prettier from 'prettier'
 import {commands, workspace} from 'vscode'
 import {LanguageClient} from 'vscode-languageclient/node.js'
@@ -24,9 +24,7 @@ let client
  *   The extension context as given by VSCode.
  */
 export async function activate(context) {
-  // If (!workspace.getConfiguration('glass').get('experimentalLanguageServer')) {
-  //   return
-  // }
+  const generateTests = workspace.getConfiguration('glass').get('generateTests')
 
   client = new LanguageClient(
     'Glass',
@@ -58,6 +56,10 @@ export async function activate(context) {
         const newFilePath = path.join(folderPath, newFileName)
         const {code, args} = compile(fileContent, fileBase)
         fs.writeFileSync(newFilePath, code)
+
+        if (!generateTests) {
+          continue
+        }
 
         const newSpecFile = `${fileBase}.spec.ts`
         const newSpecFilePath = path.join(folderPath, newSpecFile)
