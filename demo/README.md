@@ -16,8 +16,8 @@ or to see how it can be integrated in your own project.
 Clone and install this repository.
 
 ```sh
-git clone https://github.com/foundation-ui/glass-vscode.git
-cd glass-vscode
+git clone https://github.com/foundation-ui/vscode-glass.git
+cd vscode-glass
 npm install
 ```
 

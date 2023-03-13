@@ -3,7 +3,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "foundation-ui/glass-vscode"
+      "repo": "foundation-ui/vscode-glass"
     }
   ],
   "commit": false,

@@ -167,7 +167,7 @@ and automatic refactors.
 
 [MIT][] © [Foundation][glass]
 
-[demo]: https://github.com/foundation-ui/glass-vscode/tree/HEAD/demo
+[demo]: https://github.com/foundation-ui/vscode-glass/tree/HEAD/demo
 
 [frontmatter]: https://github.com/remarkjs/remark-frontmatter
 

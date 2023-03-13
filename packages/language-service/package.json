@@ -5,11 +5,11 @@
   "description": "Glass IntelliSense in Monaco editor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/foundation-ui/glass-vscode.git",
+    "url": "https://github.com/foundation-ui/vscode-glass.git",
     "directory": "packages/language-service"
   },
   "homepage": "https://foundation-ui.com",
-  "bugs": "https://github.com/foundation-ui/glass-vscode/issues",
+  "bugs": "https://github.com/foundation-ui/vscode-glass/issues",
   "license": "MIT",
   "exports": "./index.js",
   "files": [

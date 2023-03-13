@@ -1,6 +1,6 @@
 # Glass for VSCode
 
-[![GitHub Actions](https://github.com/foundation-ui/glass-vscode/workflows/main/badge.svg)](https://github.com/foundation-ui/glass-vscode/actions/workflows/main.yml)
+[![GitHub Actions](https://github.com/foundation-ui/vscode-glass/workflows/main/badge.svg)](https://github.com/foundation-ui/vscode-glass/actions/workflows/main.yml)
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/foundation.vscode-glass)](https://marketplace.visualstudio.com/items?itemName=foundation.vscode-glass)
 [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/foundation.vscode-glass)](https://marketplace.visualstudio.com/items?itemName=foundation.vscode-glass)
 
@@ -20,13 +20,13 @@ It contains the following workspaces:
 
 [MIT][] © [Foundation][glass]
 
-[`@glass-lang/monaco`]: https://github.com/foundation-ui/glass-vscode/tree/main/packages/monaco
+[`@glass-lang/monaco`]: https://github.com/foundation-ui/vscode-glass/tree/main/packages/monaco
 
-[`@glass-lang/language-server`]: https://github.com/foundation-ui/glass-vscode/tree/main/packages/language-server
+[`@glass-lang/language-server`]: https://github.com/foundation-ui/vscode-glass/tree/main/packages/language-server
 
-[`@glass-lang/language-service`]: https://github.com/foundation-ui/glass-vscode/tree/main/packages/language-service
+[`@glass-lang/language-service`]: https://github.com/foundation-ui/vscode-glass/tree/main/packages/language-service
 
-[`vscode-glass`]: https://github.com/foundation-ui/glass-vscode/tree/main/packages/vscode-glass
+[`vscode-glass`]: https://github.com/foundation-ui/vscode-glass/tree/main/packages/vscode-glass
 
 [glass]: https://foundation-ui.com
 

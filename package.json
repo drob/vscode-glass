@@ -1,6 +1,6 @@
 {
   "private": true,
-  "repository": "https://github.com/foundation-ui/glass-vscode.git",
+  "repository": "https://github.com/foundation-ui/vscode-glass.git",
   "workspaces": [
     "demo",
     "packages/*"
