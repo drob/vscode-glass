@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- [`8dc5937`](https://github.com/foundation-ui/vscode-glass/commit/8dc59379a1cf69a6aba4fd68f2ae10a4c47b03bb) Thanks [@rothfels](https://github.com/rothfels)! - simplify output, use language configuration
+
 ## 0.1.1
 
 ### Patch Changes
