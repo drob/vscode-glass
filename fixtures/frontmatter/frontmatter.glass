@@ -1,5 +1,5 @@
 ---
-author: { name: John }
+author: string
 ---
 
 Without `remark-frontmatter` this would cause a parsing error, because anything
