@@ -155,6 +155,8 @@
     ]
   },
   "dependencies": {
+    "mdast-util-frontmatter": "^1.0.1",
+    "micromark-extension-frontmatter": "^1.0.1",
     "prettier": "^2.8.4"
   }
 }

@@ -4,7 +4,9 @@
  */
 
 import {fromMarkdown} from 'mdast-util-from-markdown'
+import {frontmatterFromMarkdown} from 'mdast-util-frontmatter'
 import {mdxFromMarkdown} from 'mdast-util-mdx'
+import {frontmatter} from 'micromark-extension-frontmatter'
 import {mdxjs} from 'micromark-extension-mdxjs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
@@ -114,8 +116,11 @@ export async function deactivate() {
 
 function compile(doc, fileBaseName) {
   const tree = fromMarkdown(doc, {
-    extensions: [mdxjs()],
-    mdastExtensions: [mdxFromMarkdown()]
+    extensions: [mdxjs(), frontmatter(['yaml', 'toml'])],
+    mdastExtensions: [
+      mdxFromMarkdown(),
+      frontmatterFromMarkdown(['yaml', 'toml'])
+    ]
   })
 
   const parts = []
@@ -245,13 +250,33 @@ function getParts(node, parts, imports, args) {
 
     case 'thematicBreak': {
       // Do nothing
-
       break
     }
 
     case 'heading': {
+      // Do nothing
+      break
+    }
+
+    case 'yaml': {
       // Do nothing, for now
-      const lines = node.children[0].value.split('\n')
+      const lines = node.value.split('\n')
+      for (const line of lines) {
+        const [name, rest] = line.split(/:\s+/)
+        if (name === 'returns' || name === 'temperature') {
+          continue
+        }
+
+        const [type, description] = rest.split(/\s+/)
+        args.push({name, type, description})
+      }
+
+      break
+    }
+
+    case 'toml': {
+      // Do nothing, for now
+      const lines = node.value.split('\n')
       for (const line of lines) {
         const [name, rest] = line.split(/:\s+/)
         if (name === 'returns' || name === 'temperature') {
