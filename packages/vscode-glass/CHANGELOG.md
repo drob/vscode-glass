@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+### Patch Changes
+
+- [`a21fc66`](https://github.com/foundation-ui/glass-vscode/commit/a21fc66f8fdfc44fd2677e8b92567dbe5e48f61c) Thanks [@rothfels](https://github.com/rothfels)! - properly handle frontmatter and don't break on headings
+
 ## 0.1.0
 
 ### Minor Changes
