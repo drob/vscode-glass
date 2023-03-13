@@ -24,4 +24,4 @@ jobs:
           commit: 'chore: release vscode-glass'
           title: 'chore: release vscode-glass'
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.DEPLOYMENT_TOKEN}}

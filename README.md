@@ -3,8 +3,6 @@
 [![GitHub Actions](https://github.com/foundation-ui/glass-vscode/workflows/main/badge.svg)](https://github.com/foundation-ui/glass-vscode/actions/workflows/main.yml)
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/foundation.vscode-glass)](https://marketplace.visualstudio.com/items?itemName=foundation.vscode-glass)
 [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/foundation.vscode-glass)](https://marketplace.visualstudio.com/items?itemName=foundation.vscode-glass)
-[![Open VSX Version](https://img.shields.io/open-vsx/v/foundation/vscode-glass)](https://open-vsx.org/extension/foundation/vscode-glass)
-[![Open VSX Downloads](https://img.shields.io/open-vsx/dt/foundation/vscode-glass)](https://open-vsx.org/extension/foundation/vscode-glass)
 
 This repository contains the code to provide IntelliSense for [Glass][].
 

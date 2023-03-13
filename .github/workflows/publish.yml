@@ -19,9 +19,9 @@ jobs:
           node-version: 16
       - run: npm install
       - run: npx --workspace vscode-glass vsce package --out "$PWD"
-      - run: npx ovsx publish --packagePath *.vsix
-        env:
-          OVSX_PAT: ${{secrets.OPEN_VSX_TOKEN}}
+      # - run: npx ovsx publish --packagePath *.vsix
+      #   env:
+      #     OVSX_PAT: ${{secrets.OPEN_VSX_TOKEN}}
       - run: npx vsce publish --packagePath *.vsix
         env:
           VSCE_PAT: ${{secrets.VSCE_TOKEN}}
