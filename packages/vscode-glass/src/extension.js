@@ -13,6 +13,7 @@ import {mdxjs} from 'micromark-extension-mdxjs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import prettier from 'prettier'
+import * as vscode from 'vscode'
 import {commands, workspace} from 'vscode'
 import {LanguageClient} from 'vscode-languageclient/node.js'
 
@@ -29,6 +30,9 @@ let client
  */
 export async function activate(context) {
   const generateTests = workspace.getConfiguration('glass').get('generateTests')
+  const generateClient = workspace
+    .getConfiguration('glass')
+    .get('generateClient')
 
   client = new LanguageClient(
     'Glass',
@@ -46,68 +50,92 @@ export async function activate(context) {
 
   const extension = 'glass' // Replace with your desired extension
 
-  function processFilesInFolder(folderPath) {
-    const files = fs.readdirSync(folderPath)
-    for (const file of files) {
-      const filePath = path.join(folderPath, file)
-      if (fs.statSync(filePath).isDirectory()) {
-        // Recursively process files in subdirectory
-        processFilesInFolder(filePath)
-      } else if (path.extname(file) === `.${extension}`) {
-        const fileContent = fs.readFileSync(filePath, 'utf8')
-        const fileBase = path.basename(file, `.${extension}`)
+  function processFile(filePath) {
+    const file = filePath.split('/').slice(-1)[0]
+    const folderPath = filePath.split('/').slice(0, -1).join('/')
+    if (fs.statSync(filePath).isDirectory()) {
+      // Recursively process files in subdirectory
+      processFilesInFolder(filePath)
+    } else if (path.extname(file) === `.${extension}`) {
+      const fileContent = fs.readFileSync(filePath, 'utf8')
+      const fileBase = path.basename(file, `.${extension}`)
 
-        const genPromptFunctionName = camelCase(
-          'get' + fileBase[0].toUpperCase() + fileBase.slice(1) + 'Prompt'
-        )
+      const functionName = camelCase(
+        'get' + fileBase[0].toUpperCase() + fileBase.slice(1)
+      )
 
-        const newFileName = `${fileBase}.ts` // TODO: allow other languages
-        const newFilePath = path.join(folderPath, newFileName)
-        const {code, args} = compile(fileContent, genPromptFunctionName)
-        fs.writeFileSync(newFilePath, code)
+      const newFileName = `${fileBase}.ts` // TODO: allow other languages
+      const newFilePath = path.join(folderPath, newFileName)
 
-        if (!generateTests) {
-          continue
-        }
+      // Transpile the glass file to the target language.
+      const {code, args} = compile(fileContent, functionName, generateClient)
+      fs.writeFileSync(newFilePath, code)
 
-        const newSpecFile = `${fileBase}.spec.ts`
-        const newSpecFilePath = path.join(folderPath, newSpecFile)
-        const specCode = `import {${genPromptFunctionName}} from './${fileBase}'
+      if (!generateTests) {
+        return
+      }
+
+      const newSpecFile = `${fileBase}.spec.ts`
+      const newSpecFilePath = path.join(folderPath, newSpecFile)
+      const specCode = `import {${functionName}} from './${fileBase}'
 import {expect} from 'chai'
 
-describe('${genPromptFunctionName}', () => {
-  it('should generate prompt', async () => {
-    const result = await ${genPromptFunctionName}(${args
-          .map((a) => (a.type === 'string' ? '""' : '0'))
-          .join(', ')})
-    expect(result).to.equal('something')
-  })
+describe('${functionName}', () => {
+it('should generate prompt', async () => {
+  const result = await ${functionName}(${args
+        .map((a) => (a.type === 'string' ? '""' : '0'))
+        .join(', ')})
+  expect(result).to.equal('something')
+})
 })
 `
-        // If newSpecFilePath doesn't exist, create it
-        if (!fs.existsSync(newSpecFilePath)) {
-          const formattedCode = prettier.format(specCode, {
-            parser: 'babel',
-            semi: true,
-            singleQuote: true,
-            trailingComma: 'es5'
-          })
-          fs.writeFileSync(newSpecFilePath, formattedCode)
-        }
+      // If newSpecFilePath doesn't exist, create it
+      if (!fs.existsSync(newSpecFilePath)) {
+        const formattedCode = prettier.format(specCode, {
+          parser: 'babel',
+          semi: true,
+          singleQuote: true,
+          trailingComma: 'es5'
+        })
+        fs.writeFileSync(newSpecFilePath, formattedCode)
       }
     }
   }
 
-  const disposable = commands.registerCommand('glass.transpileAll', () => {
-    const workspaceFolders = workspace.workspaceFolders
-    if (workspaceFolders) {
-      for (const workspaceFolder of workspaceFolders) {
-        const folderPath = workspaceFolder.uri.fsPath
-        processFilesInFolder(folderPath)
-      }
+  function processFilesInFolder(folderPath) {
+    const files = fs.readdirSync(folderPath)
+    for (const file of files) {
+      const filePath = path.join(folderPath, file)
+      processFile(filePath)
     }
-  })
-  context.subscriptions.push(disposable)
+  }
+
+  context.subscriptions.push(
+    commands.registerCommand('glass.transpileAll', () => {
+      const workspaceFolders = workspace.workspaceFolders
+      if (workspaceFolders) {
+        for (const workspaceFolder of workspaceFolders) {
+          const folderPath = workspaceFolder.uri.fsPath
+          processFilesInFolder(folderPath)
+        }
+      }
+    })
+  )
+  context.subscriptions.push(
+    commands.registerCommand('glass.transpileCurrentFile', () => {
+      let editor = vscode.window.activeTextEditor
+      if (editor) {
+        let document = editor.document
+        let filePath = document.uri.fsPath
+        try {
+          processFile(filePath)
+        } catch (e) {
+          console.error(e)
+          throw e
+        }
+      }
+    })
+  )
 
   await client.start()
 }
@@ -121,7 +149,7 @@ export async function deactivate() {
   }
 }
 
-function compile(doc, genPromptFunctionName) {
+function compile(doc, functionName, generateClient) {
   const tree = fromMarkdown(doc, {
     extensions: [mdxjs(), frontmatter(['yaml', 'toml'])],
     mdastExtensions: [
@@ -133,9 +161,10 @@ function compile(doc, genPromptFunctionName) {
   const parts = []
   const imports = []
   const args = []
+  const params = {}
   let isAsync = false
   for (const node of tree.children) {
-    const async = getParts(node, parts, imports, args)
+    const async = getParts(node, parts, imports, args, params)
     if (async) {
       isAsync = true
     }
@@ -178,15 +207,37 @@ function compile(doc, genPromptFunctionName) {
   const argsString = args
     .map((a) => `${a.name}${language === 'javascript' ? '' : `: ${a.type}`}`)
     .join(', ')
+  const argsStringPureJs = args.map((a) => a.name).join(', ')
+
+  let clientCode = ''
+  if (generateClient) {
+    clientCode = `export async function ${functionName}(${argsString}) {
+      const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }))
+      const prompt = ${functionName}Prompt(${argsStringPureJs})
+      const completion = await openai.createCompletion({
+        prompt,
+        model: '${params.model || 'text-davinci-003'}',
+        temperature: ${params.temperature},
+        max_tokens: ${params.max_tokens},
+        stop: ${params.stop ? `'${params.stop}'` : undefined},
+      })
+      return completion.data.choices[0].text
+}`
+  }
   const code = `// THIS FILE WAS GENERATED BY GLASS -- DO NOT EDIT!
 
-${i ? i + '\n\n' : ''}export ${
-    isAsync ? 'async' : ''
-  } function ${genPromptFunctionName}(${argsString}) {
-    return [
-      ${parts.join(',')}
-    ].join('').trim()
-  }`
+${generateClient ? `import { Configuration, OpenAIApi } from 'openai'` : ''}
+
+${i ? i + '\n\n' : ''}
+
+export ${isAsync ? 'async' : ''} function ${functionName}Prompt(${argsString}) {
+  return [
+    ${parts.join(',')}
+  ].join('').trim()
+}
+
+${clientCode}
+`
   const formattedCode = prettier.format(code, {
     parser: 'babel',
     semi: true,
@@ -199,13 +250,13 @@ ${i ? i + '\n\n' : ''}export ${
 /**
  * Returns true if the expression is async
  */
-function getParts(node, parts, imports, args) {
+function getParts(node, parts, imports, args, params) {
   let isAsync = false
   switch (node.type) {
     case 'paragraph': {
       const paraParts = []
       for (const child of node.children) {
-        const async = getParts(child, paraParts, imports, args)
+        const async = getParts(child, paraParts, imports, args, params)
         if (async) {
           isAsync = true
         }
@@ -280,7 +331,19 @@ function getParts(node, parts, imports, args) {
       const lines = node.value.split('\n')
       for (const line of lines) {
         const [name, rest] = line.split(/:\s+/)
-        if (name === 'returns' || name === 'temperature') {
+        if (
+          name === 'temperature' ||
+          name === 'stop' ||
+          name === 'max_tokens' ||
+          name === 'model'
+        ) {
+          params[name] =
+            name === 'temperature' || name === 'max_tokens'
+              ? parseFloat(rest)
+              : rest
+          continue
+        }
+        if (name === 'returns') {
           continue
         }
 
@@ -296,7 +359,19 @@ function getParts(node, parts, imports, args) {
       const lines = node.value.split('\n')
       for (const line of lines) {
         const [name, rest] = line.split(/:\s+/)
-        if (name === 'returns' || name === 'temperature') {
+        if (
+          name === 'temperature' ||
+          name === 'stop' ||
+          name === 'max_tokens' ||
+          name === 'model'
+        ) {
+          params[name] =
+            name === 'temperature' || name === 'max_tokens'
+              ? parseFloat(rest)
+              : rest
+          continue
+        }
+        if (name === 'returns') {
           continue
         }
 

@@ -70,11 +70,20 @@
             "type": "boolean",
             "default": false,
             "description": "Whether to generate test files during transpilation"
+          },
+          "glass.generateClient": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to generate API client during transpilation"
           }
         }
       }
     ],
     "commands": [
+      {
+        "command": "glass.transpileCurrentFile",
+        "title": "Glass: Transpile current file"
+      },
       {
         "command": "glass.transpileAll",
         "title": "Glass: Transpile all"
