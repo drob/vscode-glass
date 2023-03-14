@@ -119,9 +119,7 @@ it('should generate prompt', async () => {
           processFilesInFolder(folderPath)
         }
       }
-    })
-  )
-  context.subscriptions.push(
+    }),
     commands.registerCommand('glass.transpileCurrentFile', () => {
       let editor = vscode.window.activeTextEditor
       if (editor) {
