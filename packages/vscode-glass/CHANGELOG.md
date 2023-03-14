@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Minor Changes
+
+- [`5eb3f16`](https://github.com/foundation-ui/vscode-glass/commit/5eb3f16aa1c1e8d2f130271b1b7a398ae4e09933) Thanks [@rothfels](https://github.com/rothfels)! - generate client, update params
+
 ## 0.2.0
 
 ### Minor Changes
