@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+### Patch Changes
+
+- [`74341de`](https://github.com/foundation-ui/vscode-glass/commit/74341dec6062236a7798093bac8bc199c2b7f88f) Thanks [@rothfels](https://github.com/rothfels)! - fix build
+
 ## 0.3.0
 
 ### Minor Changes
