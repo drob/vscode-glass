@@ -75,6 +75,11 @@
             "type": "boolean",
             "default": true,
             "description": "Whether to generate API client during transpilation"
+          },
+          "glass.defaultTemperature": {
+            "type": "number",
+            "default": 0,
+            "description": "Default temperature to use for model requests"
           }
         }
       }

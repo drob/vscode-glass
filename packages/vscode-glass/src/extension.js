@@ -203,19 +203,27 @@ function compile(doc, functionName, generateClient) {
     throw new Error('python not supported yet')
   }
   const argsString = args
-    .map((a) => `${a.name}${language === 'javascript' ? '' : `: ${a.type}`}`)
+    .map(
+      (a) =>
+        `${a.name}${
+          language === 'javascript' ? '' : `${a.optional ? '?' : ''}: ${a.type}`
+        }`
+    )
     .join(', ')
-  const argsStringPureJs = args.map((a) => a.name).join(', ')
+  const fullArgString = args.length ? `args: { ${argsString} }` : ''
 
   let clientCode = ''
+  const defaultTemperature = workspace
+    .getConfiguration('glass')
+    .get('defaultTemperature')
   if (generateClient) {
-    clientCode = `export async function ${functionName}(${argsString}) {
+    clientCode = `export async function ${functionName}(${fullArgString}) {
       const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }))
-      const prompt = ${functionName}Prompt(${argsStringPureJs})
+      const prompt = ${functionName}Prompt(${fullArgString ? 'args' : ''})
       const completion = await openai.createCompletion({
         prompt,
         model: '${params.model || 'text-davinci-003'}',
-        temperature: ${params.temperature},
+        temperature: ${params.temperature || defaultTemperature},
         max_tokens: ${params.max_tokens},
         stop: ${params.stop ? `'${params.stop}'` : undefined},
       })
@@ -228,7 +236,10 @@ ${generateClient ? `import { Configuration, OpenAIApi } from 'openai'` : ''}
 
 ${i ? i + '\n\n' : ''}
 
-export ${isAsync ? 'async' : ''} function ${functionName}Prompt(${argsString}) {
+export ${
+    isAsync ? 'async' : ''
+  } function ${functionName}Prompt(${fullArgString}) {
+  ${argsString ? `const {${args.map((a) => a.name).join(',')}} = args` : ''}
   return [
     ${parts.join(',')}
   ].join('').trim()
@@ -328,6 +339,9 @@ function getParts(node, parts, imports, args, params) {
       // Do nothing, for now
       const lines = node.value.split('\n')
       for (const line of lines) {
+        if (line.trim() === '') {
+          continue
+        }
         const [name, rest] = line.split(/:\s+/)
         if (
           name === 'temperature' ||
@@ -346,7 +360,9 @@ function getParts(node, parts, imports, args, params) {
         }
 
         const [type, description] = rest.split(/\s+/)
-        args.push({name, type, description})
+        const optional = type.endsWith('?')
+        const normType = optional ? type.slice(0, -1) : type
+        args.push({name, type: normType, description, optional})
       }
 
       break
@@ -356,6 +372,9 @@ function getParts(node, parts, imports, args, params) {
       // Do nothing, for now
       const lines = node.value.split('\n')
       for (const line of lines) {
+        if (line.trim() === '') {
+          continue
+        }
         const [name, rest] = line.split(/:\s+/)
         if (
           name === 'temperature' ||
@@ -374,7 +393,9 @@ function getParts(node, parts, imports, args, params) {
         }
 
         const [type, description] = rest.split(/\s+/)
-        args.push({name, type, description})
+        const optional = type.endsWith('?')
+        const normType = optional ? type.slice(0, -1) : type
+        args.push({name, type: normType, description, optional})
       }
 
       break
