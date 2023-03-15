@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- [`a9a02a8`](https://github.com/foundation-ui/vscode-glass/commit/a9a02a8c69ec47c90db4ea7a23db3e673672490a) Thanks [@rothfels](https://github.com/rothfels)! - add support for optional arguments, pass args as object
+
 ## 0.3.1
 
 ### Patch Changes
