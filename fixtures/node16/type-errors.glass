@@ -7,7 +7,7 @@ export function getCount(props) {
   return props.counts;
 }
 
-{/**
+{/**\
   * @typedef Props
   * @property {number} count
   */}

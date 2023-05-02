@@ -2,107 +2,11 @@
   "settings": {
     "git.openRepositoryInParentFolders": "never",
     "glass.language": "typescript",
-    "glass.generateTests": false,
-    "editor.tokenColorCustomizations": {
-      "textMateRules": [
-        {
-          "scope": "chat.block.role",
-          "settings": {
-              "foreground": "#f92672",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "system.block.start",
-          "settings": {
-              "foreground": "#f92672",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "system.block.end",
-          "settings": {
-              "foreground": "#f92672",
-              "fontStyle": "italic bold"
-          }
-        },
-        {
-          "scope": "user.block.start",
-          "settings": {
-              "foreground": "#2df926",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "user.block.end",
-          "settings": {
-              "foreground": "#2df926",
-              "fontStyle": "italic bold"
-          }
-        },
-        {
-          "scope": "assistant.block.start",
-          "settings": {
-              "foreground": "#d626f9",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "assistant.block.end",
-          "settings": {
-              "foreground": "#d626f9",
-              "fontStyle": "italic bold"
-          }
-        },
-        {
-          "scope": "kshot.user.block.start",
-          "settings": {
-              "foreground": "#0d3dcc",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "kshot.user.block.end",
-          "settings": {
-              "foreground": "#0d3dcc",
-              "fontStyle": "italic bold"
-          }
-        },
-        {
-          "scope": "kshot.system.block.start",
-          "settings": {
-              "foreground": "#cc730d",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "kshot.system.block.end",
-          "settings": {
-              "foreground": "#cc730d",
-              "fontStyle": "italic bold"
-          }
-        },
-        {
-          "scope": "kshot.assistant.block.start",
-          "settings": {
-              "foreground": "#cc0d0d",
-              "fontStyle": "italic bold underline"
-          }
-        },
-        {
-          "scope": "kshot.assistant.block.end",
-          "settings": {
-              "foreground": "#cc0d0d",
-              "fontStyle": "italic bold"
-          }
-        },
-      ]
-    }
   },
   "folders": [
     {"path": "demo"},
     {"path": "frontmatter"},
     {"path": "no-tsconfig"},
     {"path": "node16"}
-  ],
+  ]
 }

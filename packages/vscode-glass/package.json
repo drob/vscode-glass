@@ -69,6 +69,96 @@
         }
       }
     ],
+    "configurationDefaults": {
+      "editor.tokenColorCustomizations": {
+        "textMateRules": [
+          {
+            "scope": "system.block.start",
+            "settings": {
+              "foreground": "#f92672",
+              "fontStyle": "italic bold underline"
+            }
+          },
+          {
+            "scope": "system.block.end",
+            "settings": {
+              "foreground": "#f92672",
+              "fontStyle": "italic bold"
+            }
+          },
+          {
+            "scope": "user.block.start",
+            "settings": {
+              "foreground": "#2df926",
+              "fontStyle": "italic bold underline"
+            }
+          },
+          {
+            "scope": "user.block.end",
+            "settings": {
+              "foreground": "#2df926",
+              "fontStyle": "italic bold"
+            }
+          },
+          {
+            "scope": "assistant.block.start",
+            "settings": {
+              "foreground": "#8f26f9",
+              "fontStyle": "italic bold underline"
+            }
+          },
+          {
+            "scope": "assistant.block.end",
+            "settings": {
+              "foreground": "#8f26f9",
+              "fontStyle": "italic bold"
+            }
+          },
+          {
+            "scope": "kshot.user.block.start",
+            "settings": {
+              "foreground": "#2df92676",
+              "fontStyle": "italic bold underline"
+            }
+          },
+          {
+            "scope": "kshot.user.block.end",
+            "settings": {
+              "foreground": "#2df92676",
+              "fontStyle": "italic bold"
+            }
+          },
+          {
+            "scope": "kshot.system.block.start",
+            "settings": {
+              "foreground": "#f9267382",
+              "fontStyle": "italic bold underline"
+            }
+          },
+          {
+            "scope": "kshot.system.block.end",
+            "settings": {
+              "foreground": "#f9267382",
+              "fontStyle": "italic bold"
+            }
+          },
+          {
+            "scope": "kshot.assistant.block.start",
+            "settings": {
+              "foreground": "#8f26f98c",
+              "fontStyle": "italic bold underline"
+            }
+          },
+          {
+            "scope": "kshot.assistant.block.end",
+            "settings": {
+              "foreground": "#8f26f98c",
+              "fontStyle": "italic bold"
+            }
+          }
+        ]
+      }
+    },
     "commands": [
       {
         "command": "glass.transpileCurrentFile",

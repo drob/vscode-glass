@@ -1,31 +1,21 @@
--- user
---
+{"asdf".indexOf(3)}
 
-chat.block still applied
 
--- assistant
---
-
-asdfasdf
-
--- [foo].assistant
-#
+-- system
+asdf
 --
 
 -- [foo].system
 # asdf
---
 
--- user
-```js
-async function foo() {
-  await Promise.resolve(5)
-  const res = await fetch('https://google.com')
-  return await res.text()
+{
+  function foo() {
+    const a = 3
+    const f = Promise.resolve()
+  }
 }
-```
---
 
+--
 
 # -asdf------------------
 Then there's the matter of writing code, intellisense, etc.

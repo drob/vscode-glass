@@ -34,3 +34,10 @@ you are about to do something exceppent
 --
 
 
+
+
+{
+    function() {
+        let a = 3
+    }
+}
