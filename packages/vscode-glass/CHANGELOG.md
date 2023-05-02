@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1
+
+### Patch Changes
+
+- [`0a80be1`](https://github.com/foundation-ui/vscode-glass/commit/0a80be12ea3bf0334205214a3da015f93b85399c) Thanks [@rothfels](https://github.com/rothfels)! - add default colors
+
 ## 0.5.0
 
 ### Minor Changes
