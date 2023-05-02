@@ -2,17 +2,35 @@
 -- system
 ###
 asdfasdf
+{{someVar}}
+{{someVar2}}
 ###
 --
 
 
+-- [foo].user
+--
+
+-- [foo].system
+--
+
+-- [foo].user
+--
+
 {/* asdfdsf */}
--- asdf
+-- user
 adfasdf
 --
 
+-- [bar].system
+--
 
+-- [bar].user
+--
 
 
 -- system
+you are about to do something exceppent
 --
+
+

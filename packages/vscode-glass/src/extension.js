@@ -3,13 +3,6 @@
  * @typedef {import('vscode').ExtensionContext} ExtensionContext
  */
 
-import camelCase from 'camelcase'
-import {fromMarkdown} from 'mdast-util-from-markdown'
-import {frontmatterFromMarkdown} from 'mdast-util-frontmatter'
-import {mdxFromMarkdown, mdxToMarkdown} from 'mdast-util-mdx'
-import {toMarkdown} from 'mdast-util-to-markdown'
-import {frontmatter} from 'micromark-extension-frontmatter'
-import {mdxjs} from 'micromark-extension-mdxjs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import prettier from 'prettier'
@@ -30,11 +23,6 @@ let client
  *   The extension context as given by VSCode.
  */
 export async function activate(context) {
-  const generateTests = workspace.getConfiguration('glass').get('generateTests')
-  const generateClient = workspace
-    .getConfiguration('glass')
-    .get('generateClient')
-
   client = new LanguageClient(
     'Glass',
     {module: context.asAbsolutePath('out/language-server.js')},
@@ -123,7 +111,7 @@ export async function activate(context) {
 
   function processFile(filePath) {
     const file = filePath.split('/').slice(-1)[0]
-    const folderPath = filePath.split('/').slice(0, -1).join('/')
+    // const folderPath = filePath.split('/').slice(0, -1).join('/')
     if (fs.statSync(filePath).isDirectory()) {
       // Recursively process files in subdirectory
       processFilesInFolder(filePath)
@@ -131,54 +119,28 @@ export async function activate(context) {
       const fileContent = fs.readFileSync(filePath, 'utf8')
       const fileBase = path.basename(file, `.${extension}`)
 
-      const functionName = camelCase(
-        'get' + fileBase[0].toUpperCase() + fileBase.slice(1)
-      )
+      // const functionName = camelCase(
+      //   'get' + fileBase[0].toUpperCase() + fileBase.slice(1)
+      // )
 
-      const newFileName = `${fileBase}.ts` // TODO: allow other languages
-      const newFilePath = path.join(folderPath, newFileName)
+      // const newFileName = `${fileBase}.ts` // TODO: allow other languages
+      // const newFilePath = path.join(folderPath, newFileName)
 
       // Transpile the glass file to the target language.
-      const {code, args} = compile(fileContent, functionName, generateClient)
-      fs.writeFileSync(newFilePath, code)
-
-      if (!generateTests) {
-        return
-      }
-
-      const newSpecFile = `${fileBase}.spec.ts`
-      const newSpecFilePath = path.join(folderPath, newSpecFile)
-      const specCode = `import {${functionName}} from './${fileBase}'
-import {expect} from 'chai'
-
-describe('${functionName}', () => {
-it('should generate prompt', async () => {
-  const result = await ${functionName}(${args
-        .map((a) => (a.type === 'string' ? '""' : '0'))
-        .join(', ')})
-  expect(result).to.equal('something')
-})
-})
-`
-      // If newSpecFilePath doesn't exist, create it
-      if (!fs.existsSync(newSpecFilePath)) {
-        const formattedCode = prettier.format(specCode, {
-          parser: 'babel',
-          semi: true,
-          singleQuote: true,
-          trailingComma: 'es5'
-        })
-        fs.writeFileSync(newSpecFilePath, formattedCode)
-      }
+      const {code} = compile(fileContent, fileBase)
+      // fs.writeFileSync(newFilePath, code)
+      return code
     }
   }
 
   function processFilesInFolder(folderPath) {
     const files = fs.readdirSync(folderPath)
+    const codeBlocks = []
     for (const file of files) {
       const filePath = path.join(folderPath, file)
-      processFile(filePath)
+      codeBlocks.push(processFile(filePath))
     }
+    return codeBlocks.join('\n\n')
   }
 
   context.subscriptions.push(
@@ -187,7 +149,8 @@ it('should generate prompt', async () => {
       if (workspaceFolders) {
         for (const workspaceFolder of workspaceFolders) {
           const folderPath = workspaceFolder.uri.fsPath
-          processFilesInFolder(folderPath)
+          const code = processFilesInFolder(folderPath)
+          vscode.env.clipboard.writeText(code)
         }
       }
     }),
@@ -197,7 +160,8 @@ it('should generate prompt', async () => {
         let document = editor.document
         let filePath = document.uri.fsPath
         try {
-          processFile(filePath)
+          const code = processFile(filePath)
+          vscode.env.clipboard.writeText(code)
         } catch (e) {
           console.error(e)
           throw e
@@ -218,28 +182,28 @@ export async function deactivate() {
   }
 }
 
-function compile(doc, functionName, generateClient) {
-  const tree = fromMarkdown(doc, {
-    extensions: [mdxjs(), frontmatter(['yaml', 'toml'])],
-    mdastExtensions: [
-      mdxFromMarkdown(),
-      frontmatterFromMarkdown(['yaml', 'toml'])
-    ]
-  })
+function compile(doc, functionName) {
+  // const tree = fromMarkdown(doc, {
+  //   extensions: [mdxjs(), frontmatter(['yaml', 'toml'])],
+  //   mdastExtensions: [
+  //     mdxFromMarkdown(),
+  //     frontmatterFromMarkdown(['yaml', 'toml'])
+  //   ]
+  // })
 
-  const parts = []
-  const imports = []
-  const args = []
-  const params = {}
-  let isAsync = false
-  for (const node of tree.children) {
-    const async = getParts(node, parts, imports, args, params)
-    if (async) {
-      isAsync = true
-    }
-  }
+  // const parts = []
+  // const imports = []
+  // const args = []
+  // const params = {}
+  // let isAsync = false
+  // for (const node of tree.children) {
+  //   const async = getParts(node, parts, imports, args, params)
+  //   if (async) {
+  //     isAsync = true
+  //   }
+  // }
 
-  const i = imports.join('\n')
+  // const i = imports.join('\n')
 
   // console.log('all imports', allImports)
 
@@ -273,216 +237,42 @@ function compile(doc, functionName, generateClient) {
   if (language === 'python') {
     throw new Error('python not supported yet')
   }
-  const argsString = args
-    .map(
-      (a) =>
-        `${a.name}${
-          language === 'javascript' ? '' : `${a.optional ? '?' : ''}: ${a.type}`
-        }`
-    )
-    .join(', ')
-  const fullArgString = args.length ? `args: { ${argsString} }` : ''
 
-  let clientCode = ''
-  const defaultTemperature = workspace
-    .getConfiguration('glass')
-    .get('defaultTemperature')
-  if (generateClient) {
-    clientCode = `export async function ${functionName}(${fullArgString}) {
-      const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }))
-      const prompt = ${functionName}Prompt(${fullArgString ? 'args' : ''})
-      const completion = await openai.createCompletion({
-        prompt,
-        model: '${params.model || 'text-davinci-003'}',
-        temperature: ${params.temperature || defaultTemperature},
-        max_tokens: ${params.max_tokens},
-        stop: ${params.stop ? `'${params.stop}'` : undefined},
-      })
-      return completion.data.choices[0].text
-}`
-  }
-  const code = `// THIS FILE WAS GENERATED BY GLASS -- DO NOT EDIT!
+  const args = []
+  const uninterpolatedVariables = (doc.match(/{{([A-Za-z0-9]*)}}/gm) || []).map(
+    (str) => str.slice(2, -2)
+  )
+  // if (uninterpolatedVariables) {
+  //   throw new Error(`uninterpolated variables in ${fnName}.glass: ${uninterpolatedVariables.join(', ')}`)
+  // }
 
-${generateClient ? `import { Configuration, OpenAIApi } from 'openai'` : ''}
+  args.push(uninterpolatedVariables.map((v) => `${v}: string`))
+  console.log(JSON.stringify(uninterpolatedVariables))
 
-${i ? i + '\n\n' : ''}
+  const uninterpolatedKshots =
+    doc.match(/^-- \[([A-Za-z0-9]+)\]\.(user|assistant|system)$/gm) || []
+  console.log(JSON.stringify(uninterpolatedKshots))
+  const transformedKshots = Array.from(uninterpolatedKshots).map((k) => {
+    const indexOfParen = k.indexOf('[')
+    const indexOfClose = k.indexOf(']')
+    const kshotName = k.slice(indexOfParen + 1, indexOfClose)
+    return kshotName
+  })
+  const uniqueKshots = Array.from(new Set(transformedKshots))
+  args.push(uniqueKshots.map((k) => `${k}: any[]`))
 
-export ${
-    isAsync ? 'async' : ''
-  } function ${functionName}Prompt(${fullArgString}) {
-  ${argsString ? `const {${args.map((a) => a.name).join(',')}} = args` : ''}
-  return [
-    ${parts.join(',')}
-  ].join('').trim()
+  const code = `
+
+export function ${functionName}(variables: { ${args.join(', ')} }) {
+  return interpolateGlass('${functionName}', variables)
 }
-
-${clientCode}
 `
+
   const formattedCode = prettier.format(code, {
     parser: 'babel',
     semi: true,
     singleQuote: true,
     trailingComma: 'es5'
   })
-  return {code: formattedCode, args}
-}
-
-/**
- * Returns true if the expression is async
- */
-function getParts(node, parts, imports, args, params) {
-  let isAsync = false
-  switch (node.type) {
-    case 'paragraph': {
-      const paraParts = []
-      for (const child of node.children) {
-        const async = getParts(child, paraParts, imports, args, params)
-        if (async) {
-          isAsync = true
-        }
-      }
-
-      for (let i = 0; i < paraParts.length; i++) {
-        const paraPart = paraParts[i]
-        parts.push(paraPart)
-        if (i === paraParts.length - 1) {
-          parts.push(JSON.stringify('\n'))
-        }
-      }
-
-      parts.push(JSON.stringify('\n'))
-
-      break
-    }
-
-    case 'text': {
-      parts.push(JSON.stringify(node.value))
-
-      break
-    }
-
-    case 'mdxTextExpression': {
-      if (node.value.startsWith('/*') && node.value.endsWith('*/')) {
-        return // just a comment
-      }
-
-      const async = node.value.trim().startsWith('await')
-      if (async) {
-        isAsync = true
-      }
-      parts.push(node.value)
-
-      break
-    }
-
-    case 'mdxFlowExpression': {
-      const nodeText = node.value.trim()
-      // If nodeText looks like a javascript comment block (e.g. /* */) ignore it
-      if (nodeText.startsWith('/*') && nodeText.endsWith('*/')) {
-        return
-      }
-
-      const lines = nodeText.split('\n')
-      if (lines.length === 1) {
-        parts.push(nodeText)
-      } else if (lines.length > 1) {
-        const async = nodeText.trim().startsWith('async')
-        if (async) {
-          isAsync = true
-        }
-        parts.push(
-          `${nodeText.startsWith('async') ? 'await ' : ''}(${nodeText})()`
-        )
-      }
-
-      parts.push('\n')
-
-      break
-    }
-
-    case 'mdxjsEsm': {
-      imports.push(node.value)
-
-      break
-    }
-
-    case 'yaml': {
-      // Do nothing, for now
-      const lines = node.value.split('\n')
-      for (const line of lines) {
-        if (line.trim() === '') {
-          continue
-        }
-        const [name, rest] = line.split(/:\s+/)
-        if (
-          name === 'temperature' ||
-          name === 'stop' ||
-          name === 'max_tokens' ||
-          name === 'model'
-        ) {
-          params[name] =
-            name === 'temperature' || name === 'max_tokens'
-              ? parseFloat(rest)
-              : rest
-          continue
-        }
-        if (name === 'returns') {
-          continue
-        }
-
-        const [type, description] = rest.split(/\s+/)
-        const optional = type.endsWith('?')
-        const normType = optional ? type.slice(0, -1) : type
-        args.push({name, type: normType, description, optional})
-      }
-
-      break
-    }
-
-    case 'toml': {
-      // Do nothing, for now
-      const lines = node.value.split('\n')
-      for (const line of lines) {
-        if (line.trim() === '') {
-          continue
-        }
-        const [name, rest] = line.split(/:\s+/)
-        if (
-          name === 'temperature' ||
-          name === 'stop' ||
-          name === 'max_tokens' ||
-          name === 'model'
-        ) {
-          params[name] =
-            name === 'temperature' || name === 'max_tokens'
-              ? parseFloat(rest)
-              : rest
-          continue
-        }
-        if (name === 'returns') {
-          continue
-        }
-
-        const [type, description] = rest.split(/\s+/)
-        const optional = type.endsWith('?')
-        const normType = optional ? type.slice(0, -1) : type
-        args.push({name, type: normType, description, optional})
-      }
-
-      break
-    }
-
-    default:
-      let md = toMarkdown(
-        {type: 'root', children: [node]},
-        {extensions: [mdxToMarkdown()]}
-      )
-
-      if (node.type === 'link') {
-        md = md.trim() // for some reason the link gets a newline appended
-      }
-      parts.push(JSON.stringify(md))
-      break
-  }
-  return isAsync
+  return {code: formattedCode.trim(), args}
 }

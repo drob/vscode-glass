@@ -41,6 +41,20 @@
           }
         },
         {
+          "scope": "assistant.block.start",
+          "settings": {
+              "foreground": "#d626f9",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "assistant.block.end",
+          "settings": {
+              "foreground": "#d626f9",
+              "fontStyle": "italic bold"
+          }
+        },
+        {
           "scope": "kshot.user.block.start",
           "settings": {
               "foreground": "#0d3dcc",
@@ -65,6 +79,20 @@
           "scope": "kshot.system.block.end",
           "settings": {
               "foreground": "#cc730d",
+              "fontStyle": "italic bold"
+          }
+        },
+        {
+          "scope": "kshot.assistant.block.start",
+          "settings": {
+              "foreground": "#cc0d0d",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "kshot.assistant.block.end",
+          "settings": {
+              "foreground": "#cc0d0d",
               "fontStyle": "italic bold"
           }
         },

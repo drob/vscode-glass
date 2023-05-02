@@ -65,21 +65,6 @@
               "python"
             ],
             "description": "Language to transpile .glass files to"
-          },
-          "glass.generateTests": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to generate test files during transpilation"
-          },
-          "glass.generateClient": {
-            "type": "boolean",
-            "default": true,
-            "description": "Whether to generate API client during transpilation"
-          },
-          "glass.defaultTemperature": {
-            "type": "number",
-            "default": 0,
-            "description": "Default temperature to use for model requests"
           }
         }
       }

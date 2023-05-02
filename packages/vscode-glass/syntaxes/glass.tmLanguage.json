@@ -9,10 +9,16 @@
       "include": "#user-block"
     },
     {
+      "include": "#assistant-block"
+    },
+    {
       "include": "#kshot-user-block"
     },
     {
       "include": "#kshot-system-block"
+    },
+    {
+      "include": "#kshot-assistant-block"
     },
     {
       "include": "#jsx"
@@ -150,6 +156,36 @@
         }
       ]
     },
+    "assistant-block": {
+      "patterns": [
+        {
+          "begin": "^-- assistant$",
+          "end": "^--$",
+          "name": "assistant.block",
+          "captures": {
+            "0": {
+              "name": "assistant.block.start"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "assistant.block.end"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#jsx"
+            },
+            {
+              "include": "#markdown"
+            },
+            {
+              "include": "#jsx-evaluated-code"
+            }
+          ]
+        }
+      ]
+    },
     "kshot-user-block": {
       "begin": "^--\\s+(.+)\\.user$",
       "end": "^--$",
@@ -194,6 +230,35 @@
       "endCaptures": {
         "0": {
           "name": "kshot.system.block.end"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#jsx"
+        },
+        {
+          "include": "#markdown"
+        },
+        {
+          "include": "#jsx-evaluated-code"
+        }
+      ]
+    },
+    "kshot-assistant-block": {
+      "begin": "^--\\s+(.+)\\.assistant$",
+      "end": "^--$",
+      "name": "kshot.assistant",
+      "captures": {
+        "0": {
+          "name": "kshot.assistant.block.start"
+        },
+        "1": {
+          "name": "kshot.assistant.block.label"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "kshot.assistant.block.end"
         }
       },
       "patterns": [
