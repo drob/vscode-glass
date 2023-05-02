@@ -4,7 +4,7 @@
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/foundation.vscode-glass)](https://marketplace.visualstudio.com/items?itemName=foundation.vscode-glass)
 [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/foundation.vscode-glass)](https://marketplace.visualstudio.com/items?itemName=foundation.vscode-glass)
 
-This repository contains the code to provide IntelliSense for [Glass][].
+This repository contains the code to provide IntelliSense for [Glass](https://www.glass-lang.com).
 
 It contains the following workspaces:
 
