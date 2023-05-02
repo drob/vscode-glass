@@ -2,12 +2,79 @@
   "settings": {
     "git.openRepositoryInParentFolders": "never",
     "glass.language": "typescript",
-    "glass.generateTests": false
+    "glass.generateTests": false,
+    "editor.tokenColorCustomizations": {
+      "textMateRules": [
+        {
+          "scope": "chat.block.role",
+          "settings": {
+              "foreground": "#f92672",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "system.block.start",
+          "settings": {
+              "foreground": "#f92672",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "system.block.end",
+          "settings": {
+              "foreground": "#f92672",
+              "fontStyle": "italic bold"
+          }
+        },
+        {
+          "scope": "user.block.start",
+          "settings": {
+              "foreground": "#2df926",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "user.block.end",
+          "settings": {
+              "foreground": "#2df926",
+              "fontStyle": "italic bold"
+          }
+        },
+        {
+          "scope": "kshot.user.block.start",
+          "settings": {
+              "foreground": "#0d3dcc",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "kshot.user.block.end",
+          "settings": {
+              "foreground": "#0d3dcc",
+              "fontStyle": "italic bold"
+          }
+        },
+        {
+          "scope": "kshot.system.block.start",
+          "settings": {
+              "foreground": "#cc730d",
+              "fontStyle": "italic bold underline"
+          }
+        },
+        {
+          "scope": "kshot.system.block.end",
+          "settings": {
+              "foreground": "#cc730d",
+              "fontStyle": "italic bold"
+          }
+        },
+      ]
+    }
   },
   "folders": [
     {"path": "demo"},
     {"path": "frontmatter"},
     {"path": "no-tsconfig"},
     {"path": "node16"}
-  ]
+  ],
 }

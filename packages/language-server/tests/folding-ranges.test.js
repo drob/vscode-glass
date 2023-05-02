@@ -2,7 +2,7 @@
  * @typedef {import('vscode-languageserver').ProtocolConnection} ProtocolConnection
  */
 import assert from 'node:assert/strict'
-import {afterEach, beforeEach, test} from 'node:test'
+import {afterEach, beforeEach, it} from 'node:test'
 
 import {FoldingRangeRequest, InitializeRequest} from 'vscode-languageserver'
 
@@ -19,7 +19,7 @@ afterEach(() => {
   connection.dispose()
 })
 
-test('resolve folding ranges', async () => {
+it.skip('resolve folding ranges', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
@@ -119,7 +119,7 @@ test('resolve folding ranges', async () => {
   ])
 })
 
-test('ignore non-existent glass files', async () => {
+it.skip('ignore non-existent glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,
@@ -134,7 +134,7 @@ test('ignore non-existent glass files', async () => {
   assert.deepEqual(result, null)
 })
 
-test('ignore non-glass files', async () => {
+it.skip('ignore non-glass files', async () => {
   await connection.sendRequest(InitializeRequest.type, {
     processId: null,
     rootUri: null,

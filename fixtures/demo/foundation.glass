@@ -1,19 +1,35 @@
----
-arg1: string Description of the argument
-arg2: number Description of another arugment
-returns: code Description of what the function returns
-temperature: 5
----
+-- user
+--
 
-Ok so no weird newline stuff. Great!
+chat.block still applied
 
-{' '.repeat(4)}This is a prompt feels pretty good, can't get much better.
+-- system
+--
 
-Escaping less annoying, ` is much easier to do.
+asdfasdf
 
-{/* this is a comment */}
+-- [foo].user
+#
+--
 
+-- [foo].system
+# asdf
+--
+
+-- user
+```js
+async function foo() {
+  await Promise.resolve(5)
+  const res = await fetch('https://google.com')
+  return await res.text()
+}
+```
+--
+
+
+# -asdf------------------
 Then there's the matter of writing code, intellisense, etc.
+-------------------
 
 ```js
 async function foo() {
@@ -23,9 +39,18 @@ async function foo() {
 }
 ```
 
+## asdfasdf
+asdf
+
+# asdfasd
+
+#
+
 We can also import!
 
 import coffee from 'https://foundation-ui.com/foundation/coffee@1.0.0'
 import {myFunction} from './code'
 
 {coffee({ arg1: "foo", arg2: "testing" })}
+
+{/* foobar */}

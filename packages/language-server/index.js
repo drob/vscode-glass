@@ -21,7 +21,6 @@ import {
 import {
   convertDiagnostics,
   convertNavigationBarItems,
-  convertOutliningSpanKind,
   convertScriptElementKind,
   createDocumentationString,
   definitionInfoToLocationLinks,
@@ -186,21 +185,23 @@ connection.onFoldingRanges(async (parameters) => {
     return
   }
 
-  const ls = await getOrCreateLanguageService(ts, doc.uri)
-  const outlineSpans = ls.getOutliningSpans(fileURLToPath(doc.uri))
+  // TODO: fix code folding for markdown/JSX blocks, the defaults here conflict with the chat block folding
+  // const ls = await getOrCreateLanguageService(ts, doc.uri)
+  // const outlineSpans = ls.getOutliningSpans(fileURLToPath(doc.uri))
 
-  return outlineSpans.map((span) => {
-    const start = doc.positionAt(span.textSpan.start)
-    const end = doc.positionAt(span.textSpan.start + span.textSpan.length)
+  return []
+  // return outlineSpans.map((span) => {
+  //   const start = doc.positionAt(span.textSpan.start)
+  //   const end = doc.positionAt(span.textSpan.start + span.textSpan.length)
 
-    return {
-      kind: convertOutliningSpanKind(ts, span.kind),
-      endCharacter: end.character,
-      endLine: end.line,
-      startCharacter: start.character,
-      startLine: start.line
-    }
-  })
+  //   return {
+  //     kind: convertOutliningSpanKind(ts, span.kind),
+  //     endCharacter: end.character,
+  //     endLine: end.line,
+  //     startCharacter: start.character,
+  //     startLine: start.line
+  //   }
+  // })
 })
 
 connection.onHover(async (parameters) => {

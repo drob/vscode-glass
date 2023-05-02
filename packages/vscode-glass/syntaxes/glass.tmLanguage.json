@@ -3,6 +3,18 @@
   "name": "glass",
   "patterns": [
     {
+      "include": "#system-block"
+    },
+    {
+      "include": "#user-block"
+    },
+    {
+      "include": "#kshot-user-block"
+    },
+    {
+      "include": "#kshot-system-block"
+    },
+    {
       "include": "#jsx"
     },
     {
@@ -75,6 +87,124 @@
       "patterns": [
         {
           "include": "text.html.markdown"
+        }
+      ]
+    },
+    "system-block": {
+      "patterns": [
+        {
+          "begin": "^-- system$",
+          "end": "^--$",
+          "name": "system.block",
+          "captures": {
+            "0": {
+              "name": "system.block.start"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "system.block.end"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#jsx"
+            },
+            {
+              "include": "#markdown"
+            },
+            {
+              "include": "#jsx-evaluated-code"
+            }
+          ]
+        }
+      ]
+    },
+    "user-block": {
+      "patterns": [
+        {
+          "begin": "^-- user$",
+          "end": "^--$",
+          "name": "user.block",
+          "captures": {
+            "0": {
+              "name": "user.block.start"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "user.block.end"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#jsx"
+            },
+            {
+              "include": "#markdown"
+            },
+            {
+              "include": "#jsx-evaluated-code"
+            }
+          ]
+        }
+      ]
+    },
+    "kshot-user-block": {
+      "begin": "^--\\s+(.+)\\.user$",
+      "end": "^--$",
+      "name": "kshot.user",
+      "captures": {
+        "0": {
+          "name": "kshot.user.block.start"
+        },
+        "1": {
+          "name": "kshot.user.block.label"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "kshot.user.block.end"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#jsx"
+        },
+        {
+          "include": "#markdown"
+        },
+        {
+          "include": "#jsx-evaluated-code"
+        }
+      ]
+    },
+    "kshot-system-block": {
+      "begin": "^--\\s+(.+)\\.system$",
+      "end": "^--$",
+      "name": "kshot.system",
+      "captures": {
+        "0": {
+          "name": "kshot.system.block.start"
+        },
+        "1": {
+          "name": "kshot.system.block.label"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "kshot.system.block.end"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#jsx"
+        },
+        {
+          "include": "#markdown"
+        },
+        {
+          "include": "#jsx-evaluated-code"
         }
       ]
     }

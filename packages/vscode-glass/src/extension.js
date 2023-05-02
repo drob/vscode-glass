@@ -16,6 +16,7 @@ import prettier from 'prettier'
 import * as vscode from 'vscode'
 import {commands, workspace} from 'vscode'
 import {LanguageClient} from 'vscode-languageclient/node.js'
+import {CustomFoldingRangeProvider} from './folding-range-provider.js'
 
 /**
  * @type {LanguageClient}
@@ -49,6 +50,76 @@ export async function activate(context) {
   )
 
   const extension = 'glass' // Replace with your desired extension
+
+  const foldingRangeProvider = new CustomFoldingRangeProvider()
+  context.subscriptions.push(
+    vscode.languages.registerFoldingRangeProvider(
+      {language: 'glass'},
+      foldingRangeProvider
+    )
+  )
+
+  // let activeEditor = vscode.window.activeTextEditor
+  // let timeout = null
+
+  // if (activeEditor) {
+  //   triggerUpdateDecorations()
+  // }
+
+  // vscode.window.onDidChangeActiveTextEditor(
+  //   (editor) => {
+  //     activeEditor = editor
+  //     if (editor) {
+  //       triggerUpdateDecorations()
+  //     }
+  //   },
+  //   null,
+  //   context.subscriptions
+  // )
+
+  // vscode.workspace.onDidChangeTextDocument(
+  //   (event) => {
+  //     if (activeEditor && event.document === activeEditor.document) {
+  //       triggerUpdateDecorations()
+  //     }
+  //   },
+  //   null,
+  //   context.subscriptions
+  // )
+
+  // const decorationType = vscode.window.createTextEditorDecorationType({
+  //   backgroundColor: 'rgba(180, 250, 180, 0.1)' // Set the desired background color
+  // })
+
+  // function triggerUpdateDecorations() {
+  //   if (timeout) {
+  //     clearTimeout(timeout)
+  //   }
+  //   timeout = setTimeout(updateDecorations, 500)
+  // }
+
+  // function updateDecorations() {
+  //   if (!activeEditor) {
+  //     return
+  //   }
+
+  //   const regEx = /^---\s*label\s*$(.*?)^---$/gms
+  //   const text = activeEditor.document.getText()
+  //   const highlights = []
+
+  //   let match = null
+  //   while ((match = regEx.exec(text))) {
+  //     const startPos = activeEditor.document.positionAt(match.index)
+  //     const endPos = activeEditor.document.positionAt(
+  //       match.index + match[0].length
+  //     )
+  //     const range = new vscode.Range(startPos, endPos)
+  //     const decoration = {range, hoverMessage: 'Highlighted block'}
+  //     highlights.push(decoration)
+  //   }
+
+  //   activeEditor.setDecorations(decorationType, highlights)
+  // }
 
   function processFile(filePath) {
     const file = filePath.split('/').slice(-1)[0]
