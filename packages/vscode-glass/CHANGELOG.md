@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- [`38e5ec8`](https://github.com/foundation-ui/vscode-glass/commit/38e5ec8a31167af2543357b5d20ec248ed37d6e5) Thanks [@rothfels](https://github.com/rothfels)! - support ChatGPT format
+
 ## 0.4.0
 
 ### Minor Changes
