@@ -47,67 +47,152 @@ export async function activate(context) {
     )
   )
 
-  // let activeEditor = vscode.window.activeTextEditor
-  // let timeout = null
+  let activeEditor = vscode.window.activeTextEditor
+  let timeout = null
 
-  // if (activeEditor) {
-  //   triggerUpdateDecorations()
-  // }
+  if (activeEditor) {
+    triggerUpdateDecorations()
+  }
 
-  // vscode.window.onDidChangeActiveTextEditor(
-  //   (editor) => {
-  //     activeEditor = editor
-  //     if (editor) {
-  //       triggerUpdateDecorations()
-  //     }
-  //   },
-  //   null,
-  //   context.subscriptions
-  // )
+  vscode.window.onDidChangeActiveTextEditor(
+    (editor) => {
+      activeEditor = editor
+      if (editor) {
+        triggerUpdateDecorations()
+      }
+    },
+    null,
+    context.subscriptions
+  )
 
-  // vscode.workspace.onDidChangeTextDocument(
-  //   (event) => {
-  //     if (activeEditor && event.document === activeEditor.document) {
-  //       triggerUpdateDecorations()
-  //     }
-  //   },
-  //   null,
-  //   context.subscriptions
-  // )
+  vscode.workspace.onDidChangeTextDocument(
+    (event) => {
+      if (activeEditor && event.document === activeEditor.document) {
+        triggerUpdateDecorations()
+      }
+    },
+    null,
+    context.subscriptions
+  )
 
-  // const decorationType = vscode.window.createTextEditorDecorationType({
-  //   backgroundColor: 'rgba(180, 250, 180, 0.1)' // Set the desired background color
-  // })
+  const systemDecoration = vscode.window.createTextEditorDecorationType({
+    backgroundColor: 'rgba(249,38,114,.05)', // Set the desired background color
+    isWholeLine: true
+  })
 
-  // function triggerUpdateDecorations() {
-  //   if (timeout) {
-  //     clearTimeout(timeout)
-  //   }
-  //   timeout = setTimeout(updateDecorations, 500)
-  // }
+  const userDecoration = vscode.window.createTextEditorDecorationType({
+    backgroundColor: 'rgba(45,249,38,0.05)', // Set the desired background color
+    isWholeLine: true
+  })
 
-  // function updateDecorations() {
-  //   if (!activeEditor) {
-  //     return
-  //   }
+  const assistantDecoration = vscode.window.createTextEditorDecorationType({
+    backgroundColor: 'rgba(143,38,249,0.05)', // Set the desired background color
+    isWholeLine: true
+  })
 
-  //   const regEx = /^---\s*label\s*$(.*?)^---$/gms
-  //   const text = activeEditor.document.getText()
-  //   const highlights = []
+  function triggerUpdateDecorations() {
+    if (timeout) {
+      clearTimeout(timeout)
+    }
+    timeout = setTimeout(updateDecorations, 500)
+  }
 
-  //   let match = null
-  //   while ((match = regEx.exec(text))) {
-  //     const startPos = activeEditor.document.positionAt(match.index)
-  //     const endPos = activeEditor.document.positionAt(
-  //       match.index + match[0].length
-  //     )
-  //     const range = new vscode.Range(startPos, endPos)
-  //     const decoration = {range, hoverMessage: 'Highlighted block'}
-  //     highlights.push(decoration)
-  //   }
+  function updateDecorations() {
+    if (!activeEditor) {
+      return
+    }
 
-  //   activeEditor.setDecorations(decorationType, highlights)
-  // }
+    function addSystem() {
+      const regEx = /^--\s*system\s*$(.*?)^--$/gms
+      const regEx2 = /^--\s*\[[^\n]+\]\.system\s*$(.*?)^--$/gms
+      const text = activeEditor.document.getText()
+      const highlights = []
+
+      let match = null
+      while ((match = regEx.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index)
+        const endPos = activeEditor.document.positionAt(
+          match.index + match[0].length
+        )
+        const range = new vscode.Range(startPos, endPos)
+        const decoration = {range}
+        highlights.push(decoration)
+      }
+      while ((match = regEx2.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index)
+        const endPos = activeEditor.document.positionAt(
+          match.index + match[0].length
+        )
+        const range = new vscode.Range(startPos, endPos)
+        const decoration = {range}
+        highlights.push(decoration)
+      }
+
+      activeEditor.setDecorations(systemDecoration, highlights)
+    }
+
+    function addUser() {
+      const regEx = /^--\s*user\s*$(.*?)^--$/gms
+      const regEx2 = /^--\s*\[[^\n]+\]\.user\s*$(.*?)^--$/gms
+      const text = activeEditor.document.getText()
+      const highlights = []
+
+      let match = null
+      while ((match = regEx.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index)
+        const endPos = activeEditor.document.positionAt(
+          match.index + match[0].length
+        )
+        const range = new vscode.Range(startPos, endPos)
+        const decoration = {range}
+        highlights.push(decoration)
+      }
+      while ((match = regEx2.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index)
+        const endPos = activeEditor.document.positionAt(
+          match.index + match[0].length
+        )
+        const range = new vscode.Range(startPos, endPos)
+        const decoration = {range}
+        highlights.push(decoration)
+      }
+
+      activeEditor.setDecorations(userDecoration, highlights)
+    }
+
+    function addAssistant() {
+      const regEx = /^--\s*assistant\s*$(.*?)^--$/gms
+      const regEx2 = /^--\s*\[[^\n]+\]\.assistant\s*$(.*?)^--$/gms
+      const text = activeEditor.document.getText()
+      const highlights = []
+
+      let match = null
+      while ((match = regEx.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index)
+        const endPos = activeEditor.document.positionAt(
+          match.index + match[0].length
+        )
+        const range = new vscode.Range(startPos, endPos)
+        const decoration = {range}
+        highlights.push(decoration)
+      }
+      while ((match = regEx2.exec(text))) {
+        const startPos = activeEditor.document.positionAt(match.index)
+        const endPos = activeEditor.document.positionAt(
+          match.index + match[0].length
+        )
+        const range = new vscode.Range(startPos, endPos)
+        const decoration = {range}
+        highlights.push(decoration)
+      }
+
+      activeEditor.setDecorations(assistantDecoration, highlights)
+    }
+
+    addSystem()
+    addUser()
+    addAssistant()
+  }
 
   function processFile(filePath) {
     const file = filePath.split('/').slice(-1)[0]

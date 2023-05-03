@@ -1,43 +1,41 @@
-{/* foo bar */}
+{/* This is a comment! */}
 -- system
+Read a Transcript and determine how to respond about the property's {{agentName}}. Valid responses are:
+
+- `NO_RESPONSE`: use this if the transcript has nothing to do with {{agentName}}
+- `HELP: <reason>`: use this if the information you have about the {{agentName}} is insufficient to provide an answer and you require more information
+- `<your response>`: a useful response to the User given the property's {{agentName}}
+--
+
+-- [examples].system
+asdfasdf ajsndfkjasndf
+--
+
+-- [examples].user
+{example.agentName}
 ###
-asdfasdf
-{{someVar}}
-{{someVar2}}
+{example.instructions}
+###
+
+Transcript:
+###
+{example.transcript}
 ###
 --
 
-
--- [foo].user
+-- [examples].assistant
+{example.output}
 --
 
--- [foo].system
---
 
--- [foo].user
---
-
-{/* asdfdsf */}
 -- user
-adfasdf
+{{agentName}}
+###
+{{instructions}}
+###
+
+Transcript
+###
+{{transcript}}
+###
 --
-
--- [bar].system
---
-
--- [bar].user
---
-
-
--- system
-you are about to do something exceppent
---
-
-
-
-
-{
-    function() {
-        let a = 3
-    }
-}
